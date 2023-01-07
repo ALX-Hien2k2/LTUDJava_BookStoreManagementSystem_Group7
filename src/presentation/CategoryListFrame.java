@@ -225,5 +225,59 @@ public class CategoryListFrame extends JFrame{
                 addCategoryFrame.setVisible(true);
             }
         });
+        
+        // Action listener for update category's info button
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if a row is selected
+                if (table.getSelectedRow() == -1) {
+                    // Display a message telling the user to select an account
+                    JOptionPane.showMessageDialog(null, "Please select an category to update", "Error", JOptionPane.ERROR_MESSAGE);
+
+                } else{
+                    // Get the Id
+                    int category_id = (int) table.getValueAt(table.getSelectedRow(), 0);
+                    System.out.println("id:" + category_id);
+
+                    // Disable the old frame
+                    setEnabled(false);
+
+                    UpdateCategoryInfoFrame updateCategoryFrame = new UpdateCategoryInfoFrame(new UpdateCategoryInfoFrame.CategoryUpdated() {
+                        public void categoryUpdated(String cateName) {
+                            // Update the info in the table
+                            int row = table.getSelectedRow();
+                            int modelRow = table.convertRowIndexToModel(row);
+
+                            // name
+                            int name_column = 1;
+                            int name_modelColumn = table.convertColumnIndexToModel(name_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(cateName, modelRow, name_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, name_modelColumn);
+
+                        }
+                    }, category_id);
+
+                    // Add a listener to the addUserFrame's window closing event
+                    updateCategoryFrame.addWindowListener(new WindowAdapter() {
+                        public void windowClosed(WindowEvent e) {
+                            System.out.println("windowClosed");
+                            // Enable the old frame
+                            setEnabled(true);
+                            setVisible(true);
+                        }
+                        public void windowClosing(WindowEvent e) {
+                            System.out.println("windowClosing");
+                            // Enable the old frame
+                            setEnabled(true);
+                            setVisible(true);
+                        }
+                    });
+
+                    // Make the addUserFrame visible
+                    updateCategoryFrame.setVisible(true);
+                }
+            }
+        });
     }
 }

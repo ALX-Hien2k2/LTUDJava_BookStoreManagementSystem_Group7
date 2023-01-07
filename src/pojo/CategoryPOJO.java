@@ -18,6 +18,11 @@ public class CategoryPOJO {
     public CategoryPOJO (String name){
         this.name = name;
     }
+    
+    public CategoryPOJO (int id, String name){
+        this.id = id;
+        this.name = name;
+    }
 
     public void setId(int id) {
         this.id = id;

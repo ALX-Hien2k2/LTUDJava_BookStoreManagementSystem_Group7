@@ -182,7 +182,7 @@ public class UpdateAccountInfoFrame extends JFrame {
                     // Add user input info into UserPOJO
                     UserPOJO updateAccount = new UserPOJO(account_id, fullname, username, dob, role);
 
-                    // Insert account into db
+                    // Update account into db
                     int statusCode = business.updateAccountInfo(updateAccount);
 
                     // Show status

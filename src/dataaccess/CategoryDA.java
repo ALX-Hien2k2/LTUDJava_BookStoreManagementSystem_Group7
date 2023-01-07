@@ -117,7 +117,7 @@ public class CategoryDA {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
             // Error: SQLException
             insertedId = -1;
         } finally {
@@ -127,9 +127,57 @@ public class CategoryDA {
                 pstmt.close();
                 rs.close();
             } catch (SQLException ex) {
-                Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return insertedId;
+    }
+    
+    public int updateCategoryInfo(CategoryPOJO updateCategory){
+        int status = 1;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM categories WHERE id = ?;";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, updateCategory.getId());
+            rs = pstmt.executeQuery();
+            if(!rs.next()){
+                // Category not found
+                status = -2;
+            } else {
+                query = "UPDATE categories SET name = ? WHERE id = ?;";
+                pstmt = connection.prepareStatement(query);
+                pstmt.setString(1, updateCategory.getName());
+                pstmt.setInt(2, updateCategory.getId());
+
+                // Execute the statement
+                int rowsUpdated = pstmt.executeUpdate();
+                System.out.println(rowsUpdated + " rows affected");
+                if (rowsUpdated == 0){
+                    // Update account's info failed! OR The category's new info is the same as the old one
+                    status = -3;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
+            // Error: SQLException
+            status = -1;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
     }
 }

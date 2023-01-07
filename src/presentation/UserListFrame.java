@@ -318,7 +318,7 @@ public class UserListFrame extends JFrame{
             }
         });
 
-        // Action listener for update account' info button
+        // Action listener for update account's info button
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -335,7 +335,7 @@ public class UserListFrame extends JFrame{
                     // Disable the old frame
                     setEnabled(false);
 
-                    UpdateAccountInfoFrame addUserFrame = new UpdateAccountInfoFrame(new UpdateAccountInfoFrame.AccountUpdated() {
+                    UpdateAccountInfoFrame updateAccountInfoFrame = new UpdateAccountInfoFrame(new UpdateAccountInfoFrame.AccountUpdated() {
                         public void accountUpdated(String fullname, String username, LocalDate dob, String role) {
                             // Update the info in the table
                             int row = table.getSelectedRow();
@@ -368,7 +368,7 @@ public class UserListFrame extends JFrame{
                     }, account_id);
 
                     // Add a listener to the addUserFrame's window closing event
-                    addUserFrame.addWindowListener(new WindowAdapter() {
+                    updateAccountInfoFrame.addWindowListener(new WindowAdapter() {
                         public void windowClosed(WindowEvent e) {
                             System.out.println("windowClosed");
                             // Enable the old frame
@@ -384,7 +384,7 @@ public class UserListFrame extends JFrame{
                     });
 
                     // Make the addUserFrame visible
-                    addUserFrame.setVisible(true);
+                    updateAccountInfoFrame.setVisible(true);
                 }
             }
         });

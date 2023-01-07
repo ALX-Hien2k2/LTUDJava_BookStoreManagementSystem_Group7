@@ -302,7 +302,7 @@ public class UserDA {
         return status;
     }
 
-    public int updateAccountInfo(UserPOJO updateAaccount){
+    public int updateAccountInfo(UserPOJO updateAccount){
         int status = 1;
         Connection connection = null;
         Statement statement = null;
@@ -314,7 +314,7 @@ public class UserDA {
             statement = connection.createStatement();
             query = "SELECT * FROM users WHERE id = ?;";
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, updateAaccount.getId());
+            pstmt.setInt(1, updateAccount.getId());
             rs = pstmt.executeQuery();
             if(!rs.next()){
                 // Account not found
@@ -322,11 +322,11 @@ public class UserDA {
             } else {
                 query = "UPDATE users SET username = ?, fullname = ?, dob = ?, role = ? WHERE id = ?;";
                 pstmt = connection.prepareStatement(query);
-                pstmt.setString(1, updateAaccount.getUsername());
-                pstmt.setString(2, updateAaccount.getFullname());
-                pstmt.setDate(3, Date.valueOf(updateAaccount.getDob()));
-                pstmt.setString(4, updateAaccount.getRole());
-                pstmt.setInt(5, updateAaccount.getId());
+                pstmt.setString(1, updateAccount.getUsername());
+                pstmt.setString(2, updateAccount.getFullname());
+                pstmt.setDate(3, Date.valueOf(updateAccount.getDob()));
+                pstmt.setString(4, updateAccount.getRole());
+                pstmt.setInt(5, updateAccount.getId());
 
                 // Execute the statement
                 int rowsUpdated = pstmt.executeUpdate();

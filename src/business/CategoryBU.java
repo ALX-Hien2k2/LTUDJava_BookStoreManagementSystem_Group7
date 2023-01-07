@@ -17,4 +17,8 @@ public class CategoryBU {
         CategoryDA da = new CategoryDA();
         return da.insertCategory(newCategory);
     }
+    public int updateCategoryInfo(CategoryPOJO updateCategory){
+         CategoryDA da = new CategoryDA();
+         return da.updateCategoryInfo(updateCategory);
+     }
 }

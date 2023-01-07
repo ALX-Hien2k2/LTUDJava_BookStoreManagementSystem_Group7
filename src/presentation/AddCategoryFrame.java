@@ -3,7 +3,6 @@ package presentation;
 import business.CategoryBU;
 import pojo.CategoryPOJO;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
