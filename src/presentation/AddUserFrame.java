@@ -36,7 +36,7 @@ public class AddUserFrame extends JFrame {
     private Constant_var constant_var;
     public AddUserFrame(AccountInserted callback) {
         // Set the title of the frame
-        super("Add user account");
+        super("Add new user account");
 
         this.callback = callback;
 
@@ -53,7 +53,7 @@ public class AddUserFrame extends JFrame {
         showPasswordCheckBox = new JCheckBox("Show password");
         showConfirmPasswordCheckBox = new JCheckBox("Show password");
         comboBox = new JComboBox(new String[] {"Employee", "Admin"});
-        addButton = new JButton("Add User");
+        addButton = new JButton("Add new User Account");
         business = new UserBU();
         constant_var = new Constant_var();
 

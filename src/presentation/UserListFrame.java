@@ -28,7 +28,7 @@ public class UserListFrame extends JFrame{
     private JButton updateButton;
     private JPanel updatePanel;
     private JPanel actionPanel;
-    private String headers[] = { "id", "username", "password", "fullname", "dob", "role", "isActive" };
+    private String headers[] = { "Id", "Username", "Password", "Fullname", "Dob", "Role", "IsActive" };
     private UserBU business;
     private List<UserPOJO> users;
     private Constant_var constant_var;

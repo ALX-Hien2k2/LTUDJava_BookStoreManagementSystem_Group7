@@ -90,7 +90,7 @@ public class UserDA {
         return ans;
     }
 
-    public int insertAccount(UserPOJO newAaccount){
+    public int insertAccount(UserPOJO newAccount){
         // if insertedId = 0: get LAST_INSERT_ID() fail
         int insertedId = 0;
         Connection connection = null;
@@ -103,7 +103,7 @@ public class UserDA {
             statement = connection.createStatement();
             query = "SELECT * FROM users WHERE username = ?;";
             pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, newAaccount.getUsername());
+            pstmt.setString(1, newAccount.getUsername());
             rs = pstmt.executeQuery();
             if(rs.next()){
                 // The username already exists
@@ -111,11 +111,11 @@ public class UserDA {
             } else {
                 query = "INSERT INTO users (fullname, username, password, dob, role) VALUES (?, ?, ?, ?, ?);";
                 pstmt = connection.prepareStatement(query);
-                pstmt.setString(1, newAaccount.getFullname());
-                pstmt.setString(2, newAaccount.getUsername());
-                pstmt.setString(3, newAaccount.getPassword());
-                pstmt.setDate(4, Date.valueOf(newAaccount.getDob()));
-                pstmt.setString(5, newAaccount.getRole());
+                pstmt.setString(1, newAccount.getFullname());
+                pstmt.setString(2, newAccount.getUsername());
+                pstmt.setString(3, newAccount.getPassword());
+                pstmt.setDate(4, Date.valueOf(newAccount.getDob()));
+                pstmt.setString(5, newAccount.getRole());
 
                 // Execute the statement
                 int rowsInserted = pstmt.executeUpdate();
