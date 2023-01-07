@@ -21,4 +21,9 @@ public class CategoryBU {
          CategoryDA da = new CategoryDA();
          return da.updateCategoryInfo(updateCategory);
      }
+    
+    public int disableCategory(int id){
+         CategoryDA da = new CategoryDA();
+         return da.disableCategory(id);
+    }
 }

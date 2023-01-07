@@ -16,7 +16,7 @@ public class CategoryDA {
             ans = new ArrayList<>();
             connection = MyConnection.create();
             statement = connection.createStatement();
-            String query = "SELECT * FROM categories";
+            String query = "SELECT * FROM categories WHERE status = 1";
             rs = statement.executeQuery(query);
             while(rs.next()){
                 int id = rs.getInt("id");
@@ -50,7 +50,7 @@ public class CategoryDA {
             ans = new ArrayList<>();
             connection = MyConnection.create();
             statement = connection.createStatement();
-            String query = "SELECT * FROM categories WHERE name like ?";
+            String query = "SELECT * FROM categories WHERE status = 1 AND name like ?";
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, String.format("%%%s%%", cateName));
             rs = pstmt.executeQuery();
@@ -167,6 +167,53 @@ public class CategoryDA {
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
             // Error: SQLException
+            status = -1;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
+    }
+    
+    public int disableCategory(int category_id){
+        // Disable category successfully!
+        int status = 1;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM categories WHERE id = ? AND status = 1;";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, category_id);
+            rs = pstmt.executeQuery();
+            if(!rs.next()){
+                // Category not found or already be disabled
+                status = -2;
+            } else {
+                query = "UPDATE categories SET status = 0 WHERE id = ?;";
+                pstmt = connection.prepareStatement(query);
+                pstmt.setInt(1, category_id);
+
+                // Execute the statement
+                int rowsUpdated = pstmt.executeUpdate();
+                if (rowsUpdated <= 0) {
+                    // Disable category fail!
+                    status = -3;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
+            // Error: SQL Exception
             status = -1;
         } finally {
             try {
