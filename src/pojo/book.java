@@ -16,11 +16,16 @@ public class book {
     int author_id;
     int publisher_id;
     int category_id;
+    int promotion_id;
+
+    String author;
+    String publisher;
+    String category;
 
     public book() {
         
     }
-
+    
     public book(int id, String name, double price, int quantity, int author_id, int publisher_id, int category_id) {
         this.id = id;
         this.name = name;
@@ -29,6 +34,33 @@ public class book {
         this.author_id = author_id;
         this.publisher_id = publisher_id;
         this.category_id = category_id;
+    }
+    
+    public book(int id, String name, double price, int quantity, String author, String publisher, String category, int promotion_id) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.author = author;
+        this.publisher = publisher;
+        this.category = category;
+        this.promotion_id = promotion_id;
+    }
+    
+    public int getPromotion_id() {
+        return promotion_id;
+    }
+    
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public int getId() {

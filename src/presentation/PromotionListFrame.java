@@ -26,6 +26,9 @@ public class PromotionListFrame extends JFrame{
     private JButton reset_filter_Button;
     private JPanel filterPanel;
     
+    private JButton view_list_book_Button;
+    private JPanel view_list_book_Panel;
+    
     private JButton disable_Button;
     private JButton disabled_List_Button;
     private JPanel disable_Panel;
@@ -76,6 +79,8 @@ public class PromotionListFrame extends JFrame{
         current_promo_Button = new JButton("Current");
         upcoming_promo_Button = new JButton("Upcoming");
         reset_filter_Button = new JButton("Reset");
+        
+        view_list_book_Button = new JButton("View list");
         
         disable_Button = new JButton("Disable/Hide");
         disabled_List_Button = new JButton("View list");
@@ -195,6 +200,11 @@ public class PromotionListFrame extends JFrame{
         filterPanel.add(upcoming_promo_Button);
         filterPanel.add(reset_filter_Button);
                 
+        // Create a panel for view list of books by promotion
+        view_list_book_Panel = new JPanel();
+        view_list_book_Panel.add(new JLabel("View list of books by promotion:"));
+        view_list_book_Panel.add(view_list_book_Button);
+        
         // Create a panel for the disable button and view disabled list
         disable_Panel = new JPanel();
         disable_Panel.add(new JLabel("Disable/Hide promotion:"));
@@ -227,6 +237,7 @@ public class PromotionListFrame extends JFrame{
         actionPanel.setLayout(new BoxLayout(actionPanel, BoxLayout.Y_AXIS));
         actionPanel.add(searchPanel);
         actionPanel.add(filterPanel);
+        actionPanel.add(view_list_book_Panel);
         actionPanel.add(disable_Panel);
         actionPanel.add(open_close_Panel);
         actionPanel.add(addNewPromotionPanel);
@@ -423,7 +434,7 @@ public class PromotionListFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 // Check if a row is selected
                 if (table.getSelectedRow() == -1) {
-                    // Display a message telling the user to select an account
+                    // Display a message telling the user to select an promotion
                     JOptionPane.showMessageDialog(null, "Please select an promotion to update", "Error", JOptionPane.ERROR_MESSAGE);
 
                 } else{
@@ -483,7 +494,7 @@ public class PromotionListFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 // Check if a row is selected
                 if (table.getSelectedRow() == -1) {
-                    // Display a message telling the user to select an account
+                    // Display a message telling the user to select an promotion
                     JOptionPane.showMessageDialog(null, "Please select an promotion to update", "Error", JOptionPane.ERROR_MESSAGE);
 
                 } else{
@@ -675,8 +686,8 @@ public class PromotionListFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 // Check if a row is selected
                 if (table.getSelectedRow() == -1) {
-                    // Display a message telling the user to select an account
-                    JOptionPane.showMessageDialog(null, "Please select an promotion to open/close", "Error", JOptionPane.ERROR_MESSAGE);
+                    // Display a message telling the user to select an promotion
+                    JOptionPane.showMessageDialog(null, "Please select a promotion to open/close", "Error", JOptionPane.ERROR_MESSAGE);
                 } else{
                     // Get the ID and status of the selected promotion
                     int id = (int) table.getValueAt(table.getSelectedRow(), 0);
@@ -698,7 +709,7 @@ public class PromotionListFrame extends JFrame{
                         ((DefaultTableModel) table.getModel()).setValueAt(false, modelRow, modelColumn);
                         ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, modelColumn);
                     } else {
-                        // Open account
+                        // Open promotion
                         status = business.openPromotion(id);
 
                         // Update the status in the table
@@ -708,6 +719,45 @@ public class PromotionListFrame extends JFrame{
                         ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, modelColumn);
                     }
                     JOptionPane.showMessageDialog(null, status);
+                }
+            }
+        });
+        
+        // Action listener for view list of books by promotion button
+        view_list_book_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if a row is selected
+                if (table.getSelectedRow() == -1) {
+                    // Display a message telling the user to select an promotion
+                    JOptionPane.showMessageDialog(null, "Please select a promotion to view book list", "Error", JOptionPane.ERROR_MESSAGE);
+                } else{
+                    // Get the ID of the selected promotion
+                    int promo_id = (int) table.getValueAt(table.getSelectedRow(), 0);
+                    
+                    // Disable the old frame
+                    setEnabled(false);
+
+                    BookListByPromotionFrame bookListByPromotionFrame = new BookListByPromotionFrame(promo_id);
+
+                    // Add a listener to the addUserFrame's window closing event
+                    bookListByPromotionFrame.addWindowListener(new WindowAdapter() {
+                        public void windowClosed(WindowEvent e) {
+                            System.out.println("windowClosed");
+                            // Enable the old frame
+                            setEnabled(true);
+                            setVisible(true);
+                        }
+                        public void windowClosing(WindowEvent e) {
+                            System.out.println("windowClosing");
+                            // Enable the old frame
+                            setEnabled(true);
+                            setVisible(true);
+                        }
+                    });
+
+                    // Make the addUserFrame visible
+                    bookListByPromotionFrame.setVisible(true);
                 }
             }
         });

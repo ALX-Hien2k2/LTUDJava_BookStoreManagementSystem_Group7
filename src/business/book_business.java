@@ -17,5 +17,13 @@ public class book_business {
         book_da da = new book_da();
         return da.getAll();
     }
+    public List<book> getBookByPromotion(int promo_id){
+        book_da da = new book_da();
+        return da.getBookByPromotion(promo_id);
+    }
+    public List<book> searchBookByPromotion(String name, int promo_id){
+        book_da da = new book_da();
+        return da.searchBookByPromotion(name, promo_id);
+    }
 }
 
