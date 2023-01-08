@@ -29,6 +29,16 @@ public class PromotionPOJO {
         this.isOpen = isOpen;
     }
 
+    public PromotionPOJO(int id, String name, String description, int discount, int max_order, boolean can_customer_once, boolean can_anonymous){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.discount = discount;
+        this.max_order = max_order;
+        this.can_customer_once = can_customer_once;
+        this.can_anonymous = can_anonymous;
+    }
+    
     public int getId() {
         return id;
     }

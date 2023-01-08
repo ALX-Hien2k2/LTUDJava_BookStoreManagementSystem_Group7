@@ -342,55 +342,60 @@ public class PromotionDA {
 //        }
 //        return insertedId;
 //    }
-//    
-//    public int updateCategoryInfo(CategoryPOJO updateCategory){
-//        int status = 1;
-//        Connection connection = null;
-//        Statement statement = null;
-//        PreparedStatement pstmt = null;
-//        ResultSet rs = null;
-//        String query;
-//        try {
-//            connection = MyConnection.create();
-//            statement = connection.createStatement();
-//            query = "SELECT * FROM categories WHERE id = ?;";
-//            pstmt = connection.prepareStatement(query);
-//            pstmt.setInt(1, updateCategory.getId());
-//            rs = pstmt.executeQuery();
-//            if(!rs.next()){
-//                // Category not found
-//                status = -2;
-//            } else {
-//                query = "UPDATE categories SET name = ? WHERE id = ?;";
-//                pstmt = connection.prepareStatement(query);
-//                pstmt.setString(1, updateCategory.getName());
-//                pstmt.setInt(2, updateCategory.getId());
-//
-//                // Execute the statement
-//                int rowsUpdated = pstmt.executeUpdate();
-//                System.out.println(rowsUpdated + " rows affected");
-//                if (rowsUpdated == 0){
-//                    // Update account's info failed! OR The category's new info is the same as the old one
-//                    status = -3;
-//                }
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            // Error: SQLException
-//            status = -1;
-//        } finally {
-//            try {
-//                connection.close();
-//                statement.close();
-//                pstmt.close();
-//                rs.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return status;
-//    }
-//    
+    
+    public int updatePromotionInfo(PromotionPOJO updatePromotion){
+        int status = 1;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM promo_code WHERE id = ?;";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, updatePromotion.getId());
+            rs = pstmt.executeQuery();
+            if(!rs.next()){
+                // Promotion not found
+                status = -2;
+            } else {
+                query = "UPDATE promo_code SET name = ?, description = ?, discount = ?, max_order = ?, can_customer_once = ?, can_anonymous = ?  WHERE id = ?;";
+                pstmt = connection.prepareStatement(query);
+                pstmt.setString(1, updatePromotion.getName());
+                pstmt.setString(2, updatePromotion.getDescription());
+                pstmt.setInt(3, updatePromotion.getDiscount());
+                pstmt.setInt(4, updatePromotion.getMax_order());
+                pstmt.setBoolean(5, updatePromotion.isCan_customer_once());
+                pstmt.setBoolean(6, updatePromotion.isCan_anonymous());
+                pstmt.setInt(7, updatePromotion.getId());
+
+                // Execute the statement
+                int rowsUpdated = pstmt.executeUpdate();
+                System.out.println(rowsUpdated + " rows affected");
+                if (rowsUpdated == 0){
+                    // Update promotion's info failed! OR The promotion's new info is the same as the old one
+                    status = -3;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            // Error: SQLException
+            status = -1;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
+    }
+    
 //    public int disableCategory(int category_id){
 //        // Disable category successfully!
 //        int status = 1;

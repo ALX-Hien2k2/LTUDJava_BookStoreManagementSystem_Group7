@@ -360,60 +360,89 @@ public class PromotionListFrame extends JFrame{
 //            }
 //        });
 //        
-//        // Action listener for update category's info button
-//        updateButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                // Check if a row is selected
-//                if (table.getSelectedRow() == -1) {
-//                    // Display a message telling the user to select an account
-//                    JOptionPane.showMessageDialog(null, "Please select an category to update", "Error", JOptionPane.ERROR_MESSAGE);
-//
-//                } else{
-//                    // Get the Id
-//                    int category_id = (int) table.getValueAt(table.getSelectedRow(), 0);
-//                    System.out.println("id:" + category_id);
-//
-//                    // Disable the old frame
-//                    setEnabled(false);
-//
-//                    UpdateCategoryInfoFrame updateCategoryFrame = new UpdateCategoryInfoFrame(new UpdateCategoryInfoFrame.CategoryUpdated() {
-//                        public void categoryUpdated(String cateName) {
-//                            // Update the info in the table
-//                            int row = table.getSelectedRow();
-//                            int modelRow = table.convertRowIndexToModel(row);
-//
-//                            // name
-//                            int name_column = 1;
-//                            int name_modelColumn = table.convertColumnIndexToModel(name_column);
-//                            ((DefaultTableModel) table.getModel()).setValueAt(cateName, modelRow, name_modelColumn);
-//                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, name_modelColumn);
-//
-//                        }
-//                    }, category_id);
-//
-//                    // Add a listener to the addUserFrame's window closing event
-//                    updateCategoryFrame.addWindowListener(new WindowAdapter() {
-//                        public void windowClosed(WindowEvent e) {
-//                            System.out.println("windowClosed");
-//                            // Enable the old frame
-//                            setEnabled(true);
-//                            setVisible(true);
-//                        }
-//                        public void windowClosing(WindowEvent e) {
-//                            System.out.println("windowClosing");
-//                            // Enable the old frame
-//                            setEnabled(true);
-//                            setVisible(true);
-//                        }
-//                    });
-//
-//                    // Make the addUserFrame visible
-//                    updateCategoryFrame.setVisible(true);
-//                }
-//            }
-//        });
-//        
+        // Action listener for update promotion's info button
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if a row is selected
+                if (table.getSelectedRow() == -1) {
+                    // Display a message telling the user to select an account
+                    JOptionPane.showMessageDialog(null, "Please select an promotion to update", "Error", JOptionPane.ERROR_MESSAGE);
+
+                } else{
+                    // Get the Id
+                    int promotion_id = (int) table.getValueAt(table.getSelectedRow(), 0);
+                    System.out.println("id:" + promotion_id);
+
+                    // Disable the old frame
+                    setEnabled(false);
+
+                    UpdatePromotionInfoFrame updatePromotionFrame = new UpdatePromotionInfoFrame(new UpdatePromotionInfoFrame.PromotionUpdated() {
+                        public void promotionUpdated(String promoName, String description, int discount, int maxOrder, boolean applyOnce, boolean applyToAnonymous) {
+                            // Update the info in the table
+                            int row = table.getSelectedRow();
+                            int modelRow = table.convertRowIndexToModel(row);
+
+                            // name
+                            int name_column = 1;
+                            int name_modelColumn = table.convertColumnIndexToModel(name_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(promoName, modelRow, name_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, name_modelColumn);
+                            
+                            // description
+                            int description_column = 2;
+                            int description_modelColumn = table.convertColumnIndexToModel(description_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(description, modelRow, description_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, description_modelColumn);
+
+                            // discount
+                            int discount_column = 5;
+                            int discount_modelColumn = table.convertColumnIndexToModel(discount_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(discount, modelRow, discount_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, discount_modelColumn);
+                            
+                            // max_order
+                            int max_order_column = 6;
+                            int max_order_modelColumn = table.convertColumnIndexToModel(max_order_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(maxOrder, modelRow, max_order_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, max_order_modelColumn);
+                            
+                            // applyOnce
+                            int applyOnce_column = 7;
+                            int applyOnce_modelColumn = table.convertColumnIndexToModel(applyOnce_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(applyOnce, modelRow, applyOnce_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, applyOnce_modelColumn);
+                            
+                            // applyToAnonymous
+                            int applyToAnonymous_column = 8;
+                            int applyToAnonymous_modelColumn = table.convertColumnIndexToModel(applyToAnonymous_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(applyToAnonymous, modelRow, applyToAnonymous_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, applyToAnonymous_modelColumn);
+                        }
+                    }, promotion_id);
+
+                    // Add a listener to the addUserFrame's window closing event
+                    updatePromotionFrame.addWindowListener(new WindowAdapter() {
+                        public void windowClosed(WindowEvent e) {
+                            System.out.println("windowClosed");
+                            // Enable the old frame
+                            setEnabled(true);
+                            setVisible(true);
+                        }
+                        public void windowClosing(WindowEvent e) {
+                            System.out.println("windowClosing");
+                            // Enable the old frame
+                            setEnabled(true);
+                            setVisible(true);
+                        }
+                    });
+
+                    // Make the addUserFrame visible
+                    updatePromotionFrame.setVisible(true);
+                }
+            }
+        });
+        
 //        // Action listener for disable a category button
 //        disable_Button.addActionListener(new ActionListener() {
 //            @Override

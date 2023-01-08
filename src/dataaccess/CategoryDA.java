@@ -230,7 +230,7 @@ public class CategoryDA {
                 int rowsUpdated = pstmt.executeUpdate();
                 System.out.println(rowsUpdated + " rows affected");
                 if (rowsUpdated == 0){
-                    // Update account's info failed! OR The category's new info is the same as the old one
+                    // Update category's info failed! OR The category's new info is the same as the old one
                     status = -3;
                 }
             }

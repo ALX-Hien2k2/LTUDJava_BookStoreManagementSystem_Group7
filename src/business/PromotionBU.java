@@ -37,10 +37,10 @@ public class PromotionBU {
 //        PromotionDA da = new PromotionDA();
 //        return da.insertPromotion(newCategory);
 //    }
-//    public int updatePromotionInfo(PromotionPOJO updatePromotion){
-//         PromotionDA da = new PromotionDA();
-//         return da.updatePromotionInfo(updatePromotion);
-//    }
+    public int updatePromotionInfo(PromotionPOJO updatePromotion){
+         PromotionDA da = new PromotionDA();
+         return da.updatePromotionInfo(updatePromotion);
+    }
 //    
 //    public int disablePromotion(int id){
 //         PromotionDA da = new PromotionDA();
