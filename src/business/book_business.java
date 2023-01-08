@@ -39,6 +39,11 @@ public class book_business {
         return da.check_book_exists(name);
     }
 
+    public boolean check_promo_exists(int name) {
+        book_da da = new book_da();
+        return da.check_promoCode_exists(name);
+    }
+
     public int check_id_by_name(String name, String table) {
         book_da da = new book_da();
         return da.get_id_by_name(name, table);

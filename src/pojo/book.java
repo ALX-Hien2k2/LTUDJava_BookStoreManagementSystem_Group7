@@ -20,11 +20,12 @@ public class book {
     String publisher;
     String category;
     boolean isActive;
+    int promo_id;
     public book() {
         
     }
 
-    public book(int id, String name, double price, int quantity, int author_id, int publisher_id, int category_id, String author, String publisher, String category, boolean isActive) {
+    public book(int id, String name, double price, int quantity, int author_id, int publisher_id, int category_id, String author, String publisher, String category, boolean isActive, int promo_id) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -36,7 +37,18 @@ public class book {
         this.publisher = publisher;
         this.category = category;
         this.isActive = isActive;
+        this.promo_id = promo_id;
     }
+
+    public int getPromo_id() {
+        return promo_id;
+    }
+
+    public void setPromo_id(int promo_id) {
+        this.promo_id = promo_id;
+    }
+
+ 
 
     public int getId() {
         return id;

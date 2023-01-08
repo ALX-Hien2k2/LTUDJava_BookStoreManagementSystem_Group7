@@ -37,7 +37,8 @@ public class book_da {
                 String publisher = rs.getString("publisher.name");
                 String author = rs.getString("author.name");
                 boolean isActive = rs.getBoolean("book.isActive");
-                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive);
+                int promo_id = rs.getInt("promo_id");
+                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id);
                 ans.add(st);
             }
             rs.close();
@@ -70,7 +71,8 @@ public class book_da {
                 String publisher = rs.getString("publisher.name");
                 String author = rs.getString("author.name");
                 boolean isActive = rs.getBoolean("book.isActive");
-                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive);
+                int promo_id = rs.getInt("promo_id");
+                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id);
                 ans.add(st);
             }
             rs.close();
@@ -113,7 +115,37 @@ public class book_da {
         }
         return false;
     }
+    public boolean check_promoCode_exists(int id) {
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pr_statement = null;
+        ResultSet rs = null;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            String query = "SELECT * FROM promo_code where id =  ?";
+            pr_statement = connection.prepareStatement(query);
+            pr_statement.setInt(1, id);
+            rs = pr_statement.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
 
+            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pr_statement.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
     public int get_id_by_name(String name, String table) {
         Connection connection = null;
         Statement statement = null;
@@ -245,10 +277,10 @@ public class book_da {
     }
 
     public void update_int(int name, int id, String target) {
-            Connection connection = null;
-            Statement statement = null;
+        Connection connection = null;
+        Statement statement = null;
 
-            PreparedStatement pr_statement = null;
+        PreparedStatement pr_statement = null;
         try {
             connection = MyConnection.create();
             statement = connection.createStatement();
@@ -269,7 +301,7 @@ public class book_da {
             pr_statement.setInt(1, name);
             pr_statement.setInt(2, id);
             pr_statement.executeUpdate();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
 

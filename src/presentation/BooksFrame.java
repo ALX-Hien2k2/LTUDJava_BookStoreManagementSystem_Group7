@@ -35,8 +35,9 @@ public class BooksFrame extends javax.swing.JFrame {
 
     public void ShowBook() {
         List<book> books = book_bsn.getAll();
-        Object obj[][] = new Object[books.size()][8];
-        String[] columnNames = {"Id", "Book", "Price", "Quantity", "Author", "Publisher", "Category", "isActive"};
+        books = book_bsn.getAll();
+        Object obj[][] = new Object[books.size()][9];
+        String[] columnNames = {"Id", "Book", "Price", "Quantity", "Author", "Publisher", "Category", "PromoId", "isActive"};
         int count = 0;
         for (int i = 0; i < books.size(); i++) {
             boolean isActive = books.get(i).isIsActive();
@@ -51,7 +52,7 @@ public class BooksFrame extends javax.swing.JFrame {
             String author = books.get(i).getAuthor();
             String publisher = books.get(i).getPublisher();
             String category = books.get(i).getCategory();
-
+            int promo = books.get(i).getPromo_id();
             obj[i][0] = id;
             obj[i][1] = name;
             obj[i][2] = price;
@@ -59,17 +60,19 @@ public class BooksFrame extends javax.swing.JFrame {
             obj[i][4] = author;
             obj[i][5] = publisher;
             obj[i][6] = category;
-            obj[i][7] = isActive;
+            obj[i][7] = promo;
+            obj[i][8] = isActive;
         }
         int size = books.size() - count;
-        Object newObj[][] = new Object[size][8];
+        Object newObj[][] = new Object[size][9];
         int j = 0;
         for (int i = 0; i < books.size(); i++) {
             if (obj[i][0] != null) {
-                System.out.println(obj[i][0]);
+
                 newObj[j] = obj[i];
                 j++;
             }
+
         }
         DefaultTableModel tableModel = new DefaultTableModel(newObj, columnNames) {
             @Override
@@ -90,6 +93,8 @@ public class BooksFrame extends javax.swing.JFrame {
                     case 6:
                         return String.class;
                     case 7:
+                        return Integer.class;
+                    case 8:
                         return Boolean.class;
                     default:
                         return String.class;
@@ -105,7 +110,7 @@ public class BooksFrame extends javax.swing.JFrame {
                 int column = e.getColumn();
                 TableModel model = (TableModel) e.getSource();
                 String columnName = model.getColumnName(column);
-                if (column == 7) {
+                if (column == 8) {
                     int data = Integer.parseInt(model.getValueAt(row, 0).toString());
                     book_bsn.Disable_book(data);
 
@@ -124,17 +129,33 @@ public class BooksFrame extends javax.swing.JFrame {
                     }
                 } else if (columnName.equals("Price")) {
                     Double data = Double.parseDouble(model.getValueAt(row, column).toString());
-
+                    if (data < 0) {
+                        Notice_book.setText("Invalid input");
+                        return;
+                    }
                     int id = Integer.parseInt(model.getValueAt(row, 0).toString());
                     book_bsn.update_double(data, id);
-                    Notice_book.setText("Complete");
+
                     return;
                 } else if (columnName.equals("Quantity")) {
                     int data = Integer.parseInt(model.getValueAt(row, column).toString());
-
+                    if (data < 0) {
+                        Notice_book.setText("Invalid input");
+                        return;
+                    }
                     int id = Integer.parseInt(model.getValueAt(row, 0).toString());
                     book_bsn.update_int(data, id, columnName);
-                    Notice_book.setText("Complete");
+
+                    return;
+                } else if (columnName.equals("PromoId")) {
+                    int data = Integer.parseInt(model.getValueAt(row, column).toString());
+                    if (!book_bsn.check_promo_exists(data)) {
+                        Notice_book.setText("Unknown promo code id");
+                        return;
+                    }
+                    int id = Integer.parseInt(model.getValueAt(row, 0).toString());
+                    book_bsn.update_int(data, id, columnName);
+
                     return;
                 } else if (!columnName.equals("Id")) {
                     String data = model.getValueAt(row, column).toString();
@@ -147,6 +168,7 @@ public class BooksFrame extends javax.swing.JFrame {
                         int id = Integer.parseInt(model.getValueAt(row, 0).toString());
                         book_bsn.update_int(value, id, columnName);
                         Notice_book.setText("Complete");
+
                         return;
                     }
                 }
@@ -154,6 +176,7 @@ public class BooksFrame extends javax.swing.JFrame {
             }
 
         });
+
         add_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 add_buttonActionPerformed(evt);
@@ -233,8 +256,8 @@ public class BooksFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         List<book> books = book_bsn.getAll();
         books = book_bsn.getAll();
-        Object obj[][] = new Object[books.size()][8];
-        String[] columnNames = {"Id", "Book", "Price", "Quantity", "Author", "Publisher", "Category", "isActive"};
+        Object obj[][] = new Object[books.size()][9];
+        String[] columnNames = {"Id", "Book", "Price", "Quantity", "Author", "Publisher", "Category","PromoId", "isActive"};
         int count = 0;
         for (int i = 0; i < books.size(); i++) {
             boolean isActive = books.get(i).isIsActive();
@@ -249,7 +272,7 @@ public class BooksFrame extends javax.swing.JFrame {
             String author = books.get(i).getAuthor();
             String publisher = books.get(i).getPublisher();
             String category = books.get(i).getCategory();
-
+            int promo=books.get(i).getPromo_id();
             obj[i][0] = id;
             obj[i][1] = name;
             obj[i][2] = price;
@@ -257,10 +280,11 @@ public class BooksFrame extends javax.swing.JFrame {
             obj[i][4] = author;
             obj[i][5] = publisher;
             obj[i][6] = category;
-            obj[i][7] = isActive;
+            obj[i][7] = promo;
+            obj[i][8] = isActive;
         }
         int size = books.size()-count;
-        Object newObj[][] = new Object[size][8];
+        Object newObj[][] = new Object[size][9];
         int j = 0;
         for(int i = 0;i<books.size();i++){
             if(obj[i][0]!=null){
@@ -271,7 +295,7 @@ public class BooksFrame extends javax.swing.JFrame {
 
         }
         table = new javax.swing.JTable();
-        table_name = new javax.swing.JLabel();
+        notice = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Book");
@@ -435,6 +459,8 @@ public class BooksFrame extends javax.swing.JFrame {
                     case 6:
                     return String.class;
                     case 7:
+                    return Integer.class;
+                    case 8:
                     return Boolean.class;
                     default:
                     return String.class;
@@ -444,7 +470,6 @@ public class BooksFrame extends javax.swing.JFrame {
         table.setAutoCreateRowSorter(true);
         table.setModel(tableModel);
         table.setGridColor(new java.awt.Color(0, 0, 0));
-        table.setSelectionBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(table);
         table.getModel().addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
@@ -452,7 +477,7 @@ public class BooksFrame extends javax.swing.JFrame {
                 int column = e.getColumn();
                 TableModel model = (TableModel)e.getSource();
                 String columnName = model.getColumnName(column);
-                if(column == 7){
+                if(column == 8){
                     int data =Integer.parseInt( model.getValueAt(row, 0).toString());
                     book_bsn.Disable_book(data);
 
@@ -474,7 +499,10 @@ public class BooksFrame extends javax.swing.JFrame {
                 }
                 else if(columnName.equals("Price")) {
                     Double data = Double.parseDouble(model.getValueAt(row, column).toString());
-
+                    if (data < 0) {
+                        Notice_book.setText("Invalid input");
+                        return;
+                    }
                     int id =Integer.parseInt( model.getValueAt(row, 0).toString());
                     book_bsn.update_double(data, id);
 
@@ -482,7 +510,21 @@ public class BooksFrame extends javax.swing.JFrame {
                 }
                 else if(columnName.equals("Quantity")) {
                     int data = Integer.parseInt(model.getValueAt(row, column).toString());
+                    if (data < 0) {
+                        Notice_book.setText("Invalid input");
+                        return;
+                    }
+                    int id =Integer.parseInt( model.getValueAt(row, 0).toString());
+                    book_bsn.update_int(data, id, columnName);
 
+                    return;
+                }
+                else if(columnName.equals("PromoId")) {
+                    int data = Integer.parseInt(model.getValueAt(row, column).toString());
+                    if(!book_bsn.check_promo_exists(data)){
+                        Notice_book.setText("Unknown promo code id");
+                        return;
+                    }
                     int id =Integer.parseInt( model.getValueAt(row, 0).toString());
                     book_bsn.update_int(data, id, columnName);
 
@@ -509,11 +551,8 @@ public class BooksFrame extends javax.swing.JFrame {
 
         });
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 45, 633, 280));
-
-        table_name.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        table_name.setText("Book");
-        jPanel1.add(table_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 633, 280));
+        jPanel1.add(notice, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 170, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 450));
 
@@ -596,6 +635,7 @@ public class BooksFrame extends javax.swing.JFrame {
             return false;
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -653,11 +693,11 @@ public class BooksFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField name_tf;
+    private javax.swing.JLabel notice;
     private javax.swing.JTextField price_tf;
     private javax.swing.JTextField publisher_tf;
     private javax.swing.JTextField quant_tf;
     private javax.swing.JButton refresh;
     private javax.swing.JTable table;
-    private javax.swing.JLabel table_name;
     // End of variables declaration//GEN-END:variables
 }
