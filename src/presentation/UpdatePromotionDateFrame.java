@@ -62,7 +62,7 @@ public class UpdatePromotionDateFrame extends JFrame {
         business = new PromotionBU();
 
         // Get the current year
-        int currentYear = Year.now().getValue();
+        int currentYear = Year.now().getValue() + 5;
 
         // Create the array of years, months, days
         String[] years = new String[100];

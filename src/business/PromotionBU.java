@@ -33,10 +33,10 @@ public class PromotionBU {
         PromotionDA da = new PromotionDA();
         return da.searchDisabledPromotion(name);
     }
-//    public int insertPromotion(PromotionPOJO newPromotion){
-//        PromotionDA da = new PromotionDA();
-//        return da.insertPromotion(newCategory);
-//    }
+    public int insertPromotion(PromotionPOJO newPromotion){
+        PromotionDA da = new PromotionDA();
+        return da.insertPromotion(newPromotion);
+    }
     public int updatePromotionInfo(PromotionPOJO updatePromotion){
          PromotionDA da = new PromotionDA();
          return da.updatePromotionInfo(updatePromotion);

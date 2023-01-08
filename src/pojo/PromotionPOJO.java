@@ -45,6 +45,17 @@ public class PromotionPOJO {
         this.end_date = end_date;
     }
     
+    public PromotionPOJO(String name, String description, LocalDate start_date, LocalDate end_date, int discount, int max_order, boolean can_customer_once, boolean can_anonymous) {
+        this.name = name;
+        this.description = description;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.discount = discount;
+        this.max_order = max_order;
+        this.can_customer_once = can_customer_once;
+        this.can_anonymous = can_anonymous;
+    }
+    
     public int getId() {
         return id;
     }

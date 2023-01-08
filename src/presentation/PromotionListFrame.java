@@ -371,44 +371,51 @@ public class PromotionListFrame extends JFrame{
             }
         });
         
-//        // Action listener for Add new category button
-//        addNewCategoryButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                // Disable the old frame
-//                setEnabled(false);
-//
-//                AddCategoryFrame addCategoryFrame = new AddCategoryFrame(new AddCategoryFrame.CategoryInserted() {
-//                    public void categoryInserted(int id, String cateName) {
-//                        // Add a row to the table model
-//                        model.addRow(new Object[]{
-//                                id,
-//                                cateName,
-//                        });
-//                    }
-//                });
-//
-//                // Add a listener to the addUserFrame's window closing event
-//                addCategoryFrame.addWindowListener(new WindowAdapter() {
-//                    public void windowClosed(WindowEvent e) {
-//                        System.out.println("windowClosed");
-//                        // Enable the old frame
-//                        setEnabled(true);
-//                        setVisible(true);
-//                    }
-//                    public void windowClosing(WindowEvent e) {
-//                        System.out.println("windowClosing");
-//                        // Enable the old frame
-//                        setEnabled(true);
-//                        setVisible(true);
-//                    }
-//                });
-//
-//                // Make the addUserFrame visible
-//                addCategoryFrame.setVisible(true);
-//            }
-//        });
-//        
+        // Action listener for Add new promotion button
+        addNewPromotionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Disable the old frame
+                setEnabled(false);
+
+                AddPromotionFrame addPromotionFrame = new AddPromotionFrame(new AddPromotionFrame.PromotionInserted() {
+                    public void promotionInserted(int id, String name, String description, LocalDate start_date, LocalDate end_date, int discount, int maxOrder, boolean apply_once, boolean applyToAnonymous, boolean isOpen) {
+                        // Add a row to the table model
+                        model.addRow(new Object[]{
+                            id,
+                            name,
+                            description,
+                            start_date,
+                            end_date,
+                            discount,
+                            maxOrder,
+                            apply_once,
+                            applyToAnonymous,
+                            isOpen,
+                        });
+                    }
+                });
+
+                // Add a listener to the addUserFrame's window closing event
+                addPromotionFrame.addWindowListener(new WindowAdapter() {
+                    public void windowClosed(WindowEvent e) {
+                        System.out.println("windowClosed");
+                        // Enable the old frame
+                        setEnabled(true);
+                        setVisible(true);
+                    }
+                    public void windowClosing(WindowEvent e) {
+                        System.out.println("windowClosing");
+                        // Enable the old frame
+                        setEnabled(true);
+                        setVisible(true);
+                    }
+                });
+
+                // Make the addUserFrame visible
+                addPromotionFrame.setVisible(true);
+            }
+        });
 
         // Action listener for update promotion's date button
         updateDateButton.addActionListener(new ActionListener() {

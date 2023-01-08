@@ -304,62 +304,58 @@ public class PromotionDA {
         }
         return ans;
     }
-//    
-//    public int insertCategory(CategoryPOJO newCategory){
-//        // if insertedId = 0: get LAST_INSERT_ID() fail
-//        int insertedId = 0;
-//        Connection connection = null;
-//        Statement statement = null;
-//        PreparedStatement pstmt = null;
-//        ResultSet rs = null;
-//        String query;
-//        try {
-//            connection = MyConnection.create();
-//            statement = connection.createStatement();
-//            query = "SELECT * FROM categories WHERE name = ?;";
-//            pstmt = connection.prepareStatement(query);
-//            pstmt.setString(1, newCategory.getName());
-//            rs = pstmt.executeQuery();
-//            if(rs.next()){
-//                // The category's name already exists
-//                insertedId = -2;
-//            } else {
-//                query = "INSERT INTO categories (name) VALUES (?);";
-//                pstmt = connection.prepareStatement(query);
-//                pstmt.setString(1, newCategory.getName());
-//
-//                // Execute the statement
-//                int rowsInserted = pstmt.executeUpdate();
-//                if (rowsInserted > 0) {
-//                    Statement idStatement = null;
-//                    ResultSet idResult = null;
-//                    idStatement = connection.createStatement();
-//                    idResult = idStatement.executeQuery("SELECT LAST_INSERT_ID()");
-//                    if (idResult.next()) {
-//                        insertedId = idResult.getInt(1);
-//                        System.out.println("insertedId: " + insertedId);
-//                    }
-//                } else {
-//                    // User added failed
-//                    insertedId = -3;
-//                }
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            // Error: SQLException
-//            insertedId = -1;
-//        } finally {
-//            try {
-//                connection.close();
-//                statement.close();
-//                pstmt.close();
-//                rs.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return insertedId;
-//    }
+    
+    public int insertPromotion(PromotionPOJO newPromotion){
+        // if insertedId = 0: get LAST_INSERT_ID() fail
+        int insertedId = 0;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "INSERT INTO promo_code (name, description, start_date, end_date, discount, max_order, can_customer_once, can_anonymous) VALUES (?,?,?,?,?,?,?,?);";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, newPromotion.getName());
+            pstmt.setString(2, newPromotion.getDescription());
+            pstmt.setDate(3, Date.valueOf(newPromotion.getStart_date()));
+            pstmt.setDate(4, Date.valueOf(newPromotion.getEnd_date()));
+            pstmt.setInt(5, newPromotion.getDiscount());
+            pstmt.setInt(6, newPromotion.getMax_order());
+            pstmt.setBoolean(7, newPromotion.isCan_customer_once());
+            pstmt.setBoolean(8, newPromotion.isCan_anonymous());
+
+            // Execute the statement
+            int rowsInserted = pstmt.executeUpdate();
+            if (rowsInserted > 0) {
+                Statement idStatement = null;
+                ResultSet idResult = null;
+                idStatement = connection.createStatement();
+                idResult = idStatement.executeQuery("SELECT LAST_INSERT_ID()");
+                if (idResult.next()) {
+                    insertedId = idResult.getInt(1);
+                    System.out.println("insertedId: " + insertedId);
+                }
+            } else {
+                // Promotion added failed
+                insertedId = -2;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            // Error: SQLException
+            insertedId = -1;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return insertedId;
+    }
     
     public int updatePromotionInfo(PromotionPOJO updatePromotion){
         int status = 1;

@@ -70,7 +70,6 @@ public class UpdatePromotionInfoFrame extends JFrame {
         maxOrderField = new JFormattedTextField(formatter);
         
         updateButton = new JButton("Update");
-        
         business = new PromotionBU();
 
         // ComboBox
