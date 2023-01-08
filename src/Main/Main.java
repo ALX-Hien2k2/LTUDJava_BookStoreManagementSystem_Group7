@@ -13,7 +13,7 @@ public class Main {
 //                // Make the frame visible
 //                userListFrame.setVisible(true);
                 // Initialize frame
-                PublisherListFrame publisherListFrame = new PublisherListFrame();
+                ImportSheetListFrame publisherListFrame = new ImportSheetListFrame();
 
                 // Make the frame visible
                 publisherListFrame.setVisible(true);
