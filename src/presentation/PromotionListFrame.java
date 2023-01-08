@@ -559,7 +559,7 @@ public class PromotionListFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 // Check if a row is selected
                 if (table.getSelectedRow() == -1) {
-                    // Display a message telling the user to select a category
+                    // Display a message telling the user to select a promotion
                     JOptionPane.showMessageDialog(null, "Please select a promotion to disable", "Error", JOptionPane.ERROR_MESSAGE);
                 } else{
                     // Confirm
@@ -616,43 +616,51 @@ public class PromotionListFrame extends JFrame{
             }
         });
         
-//        // Action listener for disable a category button
-//        disabled_List_Button.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                // Disable the old frame
-//                setEnabled(false);
-//
-//                DisabledCategoryListFrame disabledCategoryListFrame = new DisabledCategoryListFrame(new DisabledCategoryListFrame.CategoryEnabled() {
-//                    public void categoryEnabled(int id, String cateName) {
-//                        // Add a row to the table model
-//                        model.addRow(new Object[]{
-//                                id,
-//                                cateName,
-//                        });
-//                    }
-//                });
-//
-//                // Add a listener to the addUserFrame's window closing event
-//                disabledCategoryListFrame.addWindowListener(new WindowAdapter() {
-//                    public void windowClosed(WindowEvent e) {
-//                        System.out.println("windowClosed");
-//                        // Enable the old frame
-//                        setEnabled(true);
-//                        setVisible(true);
-//                    }
-//                    public void windowClosing(WindowEvent e) {
-//                        System.out.println("windowClosing");
-//                        // Enable the old frame
-//                        setEnabled(true);
-//                        setVisible(true);
-//                    }
-//                });
-//
-//                // Make the addUserFrame visible
-//                disabledCategoryListFrame.setVisible(true);
-//            }
-//        });
+        // Action listener for disabled promotions list button
+        disabled_List_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Disable the old frame
+                setEnabled(false);
+
+                DisabledPromotionListFrame disabledPromotionListFrame = new DisabledPromotionListFrame(new DisabledPromotionListFrame.PromotionEnabled() {
+                    public void promotionEnabled(int id, String name, String description, LocalDate start_date, LocalDate end_date, int discount, int maxOrder, boolean apply_once, boolean applyToAnonymous, boolean isOpen) {
+                        // Add a row to the table model
+                        model.addRow(new Object[]{
+                                id,
+                                name,
+                                description,
+                                start_date,
+                                end_date,
+                                discount,
+                                maxOrder,
+                                apply_once,
+                                applyToAnonymous,
+                                isOpen,
+                        });
+                    }
+                });
+
+                // Add a listener to the addUserFrame's window closing event
+                disabledPromotionListFrame.addWindowListener(new WindowAdapter() {
+                    public void windowClosed(WindowEvent e) {
+                        System.out.println("windowClosed");
+                        // Enable the old frame
+                        setEnabled(true);
+                        setVisible(true);
+                    }
+                    public void windowClosing(WindowEvent e) {
+                        System.out.println("windowClosing");
+                        // Enable the old frame
+                        setEnabled(true);
+                        setVisible(true);
+                    }
+                });
+
+                // Make the addUserFrame visible
+                disabledPromotionListFrame.setVisible(true);
+            }
+        });
 
         // Action listener for Enable/Disable button
         open_close_Button.addActionListener(new ActionListener() {

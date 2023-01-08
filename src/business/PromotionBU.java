@@ -9,10 +9,10 @@ public class PromotionBU {
         PromotionDA da = new PromotionDA();
         return da.getAllPromotion();
     }
-//    public List<PromotionPOJO> getAllDisabledPromotion(){
-//        PromotionDA da = new PromotionDA();
-//        return da.getAllDisabledPromotion();
-//    }
+    public List<PromotionPOJO> getAllDisabledPromotion(){
+        PromotionDA da = new PromotionDA();
+        return da.getAllDisabledPromotion();
+    }
     public List<PromotionPOJO> getPastPromotion(){
         PromotionDA da = new PromotionDA();
         return da.getPastPromotion();
@@ -29,10 +29,10 @@ public class PromotionBU {
         PromotionDA da = new PromotionDA();
         return da.searchPromotion(name);
     }
-//    public List<PromotionPOJO> searchDisabledPromotion(String name){
-//        PromotionDA da = new PromotionDA();
-//        return da.searchDisabledPromotion(name);
-//    }
+    public List<PromotionPOJO> searchDisabledPromotion(String name){
+        PromotionDA da = new PromotionDA();
+        return da.searchDisabledPromotion(name);
+    }
 //    public int insertPromotion(PromotionPOJO newPromotion){
 //        PromotionDA da = new PromotionDA();
 //        return da.insertPromotion(newCategory);

@@ -174,39 +174,47 @@ public class PromotionDA {
         return ans;
     }
     
-//    public List<CategoryPOJO> getAllDisabledCategory(){
-//        List<CategoryPOJO> ans = null;
-//        Connection connection = null;
-//        Statement statement = null;
-//        ResultSet rs = null;
-//        try {
-//            ans = new ArrayList<>();
-//            connection = MyConnection.create();
-//            statement = connection.createStatement();
-//            String query = "SELECT * FROM categories WHERE status = 0";
-//            rs = statement.executeQuery(query);
-//            while(rs.next()){
-//                int id = rs.getInt("id");
-//                String name = rs.getString("name");
-//                Boolean status = rs.getBoolean("status");
-//                CategoryPOJO cate = new CategoryPOJO(id, name, status);
-//                ans.add(cate);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            ans = null;
-//        } finally {
-//            try {
-//                connection.close();
-//                statement.close();
-//                rs.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return ans;
-//    }
-//    
+    public List<PromotionPOJO> getAllDisabledPromotion(){
+        List<PromotionPOJO> ans = null;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet rs = null;
+        try {
+            ans = new ArrayList<>();
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            String query = "SELECT * FROM promo_code WHERE isActive = 0";
+            rs = statement.executeQuery(query);
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                LocalDate start_date = rs.getDate("start_date").toLocalDate();
+                LocalDate end_date = rs.getDate("end_date").toLocalDate();
+                int discount = rs.getInt("discount");
+                int max_order = rs.getInt("max_order");
+                Boolean can_customer_once = rs.getBoolean("can_customer_once");
+                Boolean can_anonymous = rs.getBoolean("can_anonymous");
+                Boolean isActive = rs.getBoolean("isActive");
+                Boolean isOpen = rs.getBoolean("isOpen");
+                PromotionPOJO promo = new PromotionPOJO(id, name, description, start_date, end_date, discount, max_order, can_customer_once, can_anonymous, isActive, isOpen);
+                ans.add(promo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            ans = null;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return ans;
+    }
+    
     public List<PromotionPOJO> searchPromotion(String promoName){
         List<PromotionPOJO> ans = null;
         Connection connection = null;
@@ -252,42 +260,50 @@ public class PromotionDA {
         return ans;
     }
     
-//    public List<CategoryPOJO> searchDisabledCategory(String cateName){
-//        List<CategoryPOJO> ans = null;
-//        Connection connection = null;
-//        Statement statement = null;
-//        PreparedStatement pstmt = null;
-//        ResultSet rs = null;
-//        try {
-//            ans = new ArrayList<>();
-//            connection = MyConnection.create();
-//            statement = connection.createStatement();
-//            String query = "SELECT * FROM categories WHERE status = 0 AND name like ?";
-//            pstmt = connection.prepareStatement(query);
-//            pstmt.setString(1, String.format("%%%s%%", cateName));
-//            rs = pstmt.executeQuery();
-//            while(rs.next()){
-//                int id = rs.getInt("id");
-//                String name = rs.getString("name");
-//                Boolean status = rs.getBoolean("status");
-//                CategoryPOJO category = new CategoryPOJO(id, name, status);
-//                ans.add(category);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            ans = null;
-//        } finally {
-//            try {
-//                connection.close();
-//                statement.close();
-//                pstmt.close();
-//                rs.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return ans;
-//    }
+    public List<PromotionPOJO> searchDisabledPromotion(String promoName){
+        List<PromotionPOJO> ans = null;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            ans = new ArrayList<>();
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            String query = "SELECT * FROM promo_code WHERE isActive = 0 AND name like ?";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, String.format("%%%s%%", promoName));
+            rs = pstmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                LocalDate start_date = rs.getDate("start_date").toLocalDate();
+                LocalDate end_date = rs.getDate("end_date").toLocalDate();
+                int discount = rs.getInt("discount");
+                int max_order = rs.getInt("max_order");
+                Boolean can_customer_once = rs.getBoolean("can_customer_once");
+                Boolean can_anonymous = rs.getBoolean("can_anonymous");
+                Boolean isActive = rs.getBoolean("isActive");
+                Boolean isOpen = rs.getBoolean("isOpen");
+                PromotionPOJO promo = new PromotionPOJO(id, name, description, start_date, end_date, discount, max_order, can_customer_once, can_anonymous, isActive, isOpen);
+                ans.add(promo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            ans = null;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return ans;
+    }
 //    
 //    public int insertCategory(CategoryPOJO newCategory){
 //        // if insertedId = 0: get LAST_INSERT_ID() fail
@@ -520,12 +536,12 @@ public class PromotionDA {
                 // Execute the statement
                 int rowsUpdated = pstmt.executeUpdate();
                 if (rowsUpdated <= 0) {
-                    // Enable category fail!
+                    // Enable promotion fail!
                     status = -3;
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
             // Error: SQL Exception
             status = -1;
         } finally {
@@ -535,7 +551,7 @@ public class PromotionDA {
                 pstmt.close();
                 rs.close();
             } catch (SQLException ex) {
-                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return status;
