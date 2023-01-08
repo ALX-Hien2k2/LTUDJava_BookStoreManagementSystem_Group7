@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,11 +30,17 @@ public class PromotionListFrame extends JFrame{
     private JButton disabled_List_Button;
     private JPanel disable_Panel;
     
+    private JButton open_close_Button;
+    private JPanel open_close_Panel;
+    
     private JButton addNewPromotionButton;
     private JPanel addNewPromotionPanel;
     
-    private JButton updateButton;
-    private JPanel updatePanel;
+    private JButton updateDateButton;
+    private JPanel updateDatePanel;
+    
+    private JButton updateInfoButton;
+    private JPanel updateInfoPanel;
     
     private JPanel actionPanel;
     private String headers[] = { "Id", "Promotion name", "Description", "Start Date", "End Date", "Discount", "Max Order", "Apply once", "Apply to anonymous", "Open"};
@@ -71,12 +78,14 @@ public class PromotionListFrame extends JFrame{
         reset_filter_Button = new JButton("Reset");
         
         disable_Button = new JButton("Disable/Hide");
-        
         disabled_List_Button = new JButton("View list");
+        
+        open_close_Button = new JButton("Close");
         
         addNewPromotionButton =  new JButton("Add");
         
-        updateButton = new JButton("Update");
+        updateDateButton = new JButton("Update");
+        updateInfoButton = new JButton("Update");
 
         // Config components
         // Table model
@@ -85,7 +94,7 @@ public class PromotionListFrame extends JFrame{
         
         // Table
         TableColumn id_column = table.getColumnModel().getColumn(0); // id
-        id_column.setPreferredWidth(30);
+        id_column.setPreferredWidth(10);
         id_column.setResizable(false);
         
         TableColumn name_column = table.getColumnModel().getColumn(1); // name
@@ -93,9 +102,37 @@ public class PromotionListFrame extends JFrame{
         name_column.setResizable(true);
         
         TableColumn description_column = table.getColumnModel().getColumn(2); // description
-        description_column.setPreferredWidth(500);
+        description_column.setPreferredWidth(450);
         description_column.setResizable(true);
 
+        TableColumn startDate_column = table.getColumnModel().getColumn(3); // start date
+        startDate_column.setPreferredWidth(30);
+        startDate_column.setResizable(false);
+        
+        TableColumn endDate_column = table.getColumnModel().getColumn(4); // end date
+        endDate_column.setPreferredWidth(30);
+        endDate_column.setResizable(false);
+        
+        TableColumn discount_column = table.getColumnModel().getColumn(5); // end date
+        discount_column.setPreferredWidth(30);
+        discount_column.setResizable(false);
+        
+        TableColumn maxOrder_column = table.getColumnModel().getColumn(6); // end date
+        maxOrder_column.setPreferredWidth(30);
+        maxOrder_column.setResizable(false);
+        
+        TableColumn applyOnce_column = table.getColumnModel().getColumn(7); // end date
+        applyOnce_column.setPreferredWidth(30);
+        applyOnce_column.setResizable(false);
+        
+        TableColumn applyToAnonymous_column = table.getColumnModel().getColumn(8); // end date
+        applyToAnonymous_column.setPreferredWidth(30);
+        applyToAnonymous_column.setResizable(false);
+        
+        TableColumn open_column = table.getColumnModel().getColumn(9); // end date
+        open_column.setPreferredWidth(30);
+        open_column.setResizable(false);
+        
         table.getTableHeader().setReorderingAllowed(false);
 
         // Create a TableRowSorter for the table
@@ -165,15 +202,25 @@ public class PromotionListFrame extends JFrame{
         disable_Panel.add(new JLabel("View disabled promotion list:"));
         disable_Panel.add(disabled_List_Button);
 
+        // Create a panel for the close button
+        open_close_Panel = new JPanel();
+        open_close_Panel.add(new JLabel("Close Promotion:"));
+        open_close_Panel.add(open_close_Button);
+        
         // Create a panel for the add new promotion button
         addNewPromotionPanel = new JPanel();
         addNewPromotionPanel.add(new JLabel("Add new promotion:"));
         addNewPromotionPanel.add(addNewPromotionButton);
 
         // Create a panel for the update promotion's info button
-        updatePanel = new JPanel();
-        updatePanel.add(new JLabel("Update promotion's info:"));
-        updatePanel.add(updateButton);
+        updateInfoPanel = new JPanel();
+        updateInfoPanel.add(new JLabel("Update promotion's info:"));
+        updateInfoPanel.add(updateInfoButton);
+        
+        // Create a panel for the update promotion's date button
+        updateDatePanel = new JPanel();
+        updateDatePanel.add(new JLabel("Update promotion's date:"));
+        updateDatePanel.add(updateDateButton);
 
         // Create a panel for action buttons
         actionPanel = new JPanel();
@@ -182,7 +229,8 @@ public class PromotionListFrame extends JFrame{
         actionPanel.add(filterPanel);
         actionPanel.add(disable_Panel);
         actionPanel.add(addNewPromotionPanel);
-        actionPanel.add(updatePanel);
+        actionPanel.add(updateDatePanel);
+        actionPanel.add(updateInfoPanel);
 
         // Add components to frame
         add(scroll, BorderLayout.CENTER);
@@ -360,8 +408,69 @@ public class PromotionListFrame extends JFrame{
 //            }
 //        });
 //        
+
+        // Action listener for update promotion's date button
+        updateDateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if a row is selected
+                if (table.getSelectedRow() == -1) {
+                    // Display a message telling the user to select an account
+                    JOptionPane.showMessageDialog(null, "Please select an promotion to update", "Error", JOptionPane.ERROR_MESSAGE);
+
+                } else{
+                    // Get the Id
+                    int promotion_id = (int) table.getValueAt(table.getSelectedRow(), 0);
+                    System.out.println("id:" + promotion_id);
+
+                    // Disable the old frame
+                    setEnabled(false);
+
+                    UpdatePromotionDateFrame updatePromotionDateFrame = new UpdatePromotionDateFrame(new UpdatePromotionDateFrame.PromotionDateUpdated() {
+                        public void promotionDateUpdated(LocalDate start_date, LocalDate end_date) {
+                            // Update the info in the table
+                            int row = table.getSelectedRow();
+                            int modelRow = table.convertRowIndexToModel(row);
+
+                            // start_date
+                            int start_date_column = 3;
+                            int start_date_modelColumn = table.convertColumnIndexToModel(start_date_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(start_date, modelRow, start_date_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, start_date_modelColumn);
+                            
+                            // end_date
+                            int end_date_column = 4;
+                            int end_date_modelColumn = table.convertColumnIndexToModel(end_date_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(end_date, modelRow, end_date_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, end_date_modelColumn);
+
+                        }
+                    }, promotion_id);
+
+                    // Add a listener to the addUserFrame's window closing event
+                    updatePromotionDateFrame.addWindowListener(new WindowAdapter() {
+                        public void windowClosed(WindowEvent e) {
+                            System.out.println("windowClosed");
+                            // Enable the old frame
+                            setEnabled(true);
+                            setVisible(true);
+                        }
+                        public void windowClosing(WindowEvent e) {
+                            System.out.println("windowClosing");
+                            // Enable the old frame
+                            setEnabled(true);
+                            setVisible(true);
+                        }
+                    });
+
+                    // Make the addUserFrame visible
+                    updatePromotionDateFrame.setVisible(true);
+                }
+            }
+        });
+
         // Action listener for update promotion's info button
-        updateButton.addActionListener(new ActionListener() {
+        updateInfoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Check if a row is selected
@@ -543,5 +652,48 @@ public class PromotionListFrame extends JFrame{
 //                disabledCategoryListFrame.setVisible(true);
 //            }
 //        });
+
+        // Action listener for Enable/Disable button
+        open_close_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if a row is selected
+                if (table.getSelectedRow() == -1) {
+                    // Display a message telling the user to select an account
+                    JOptionPane.showMessageDialog(null, "Please select an promotion to close", "Error", JOptionPane.ERROR_MESSAGE);
+                } else{
+                    // Get the ID and status of the selected account
+                    int id = (int) table.getValueAt(table.getSelectedRow(), 0);
+                    Boolean isOpen = (Boolean) table.getValueAt(table.getSelectedRow(), 10);
+
+                    System.out.println("id:" + id);
+                    System.out.println("isOpen:" + isOpen);
+
+                    String status;
+                    int row = table.getSelectedRow();
+                    int column = 10;
+                    if (isOpen) {
+                        // Close promotion
+                        status = business.closePromotion(id);
+
+                        // Update the status in the table
+                        int modelRow = table.convertRowIndexToModel(row);
+                        int modelColumn = table.convertColumnIndexToModel(column);
+                        ((DefaultTableModel) table.getModel()).setValueAt(false, modelRow, modelColumn);
+                        ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, modelColumn);
+                    } else {
+                        // Open account
+                        status = business.openPromotion(id);
+
+                        // Update the status in the table
+                        int modelRow = table.convertRowIndexToModel(row);
+                        int modelColumn = table.convertColumnIndexToModel(column);
+                        ((DefaultTableModel) table.getModel()).setValueAt(true, modelRow, modelColumn);
+                        ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, modelColumn);
+                    }
+                    JOptionPane.showMessageDialog(null, status);
+                }
+            }
+        });
     }
 }

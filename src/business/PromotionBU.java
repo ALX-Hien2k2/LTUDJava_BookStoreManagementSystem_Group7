@@ -41,6 +41,10 @@ public class PromotionBU {
          PromotionDA da = new PromotionDA();
          return da.updatePromotionInfo(updatePromotion);
     }
+    public int updatePromotionDate(PromotionPOJO updatePromotionDate){
+         PromotionDA da = new PromotionDA();
+         return da.updatePromotionDate(updatePromotionDate);
+    }
 //    
 //    public int disablePromotion(int id){
 //         PromotionDA da = new PromotionDA();

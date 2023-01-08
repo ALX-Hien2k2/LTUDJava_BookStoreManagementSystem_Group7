@@ -39,6 +39,12 @@ public class PromotionPOJO {
         this.can_anonymous = can_anonymous;
     }
     
+    public PromotionPOJO(int id, LocalDate start_date, LocalDate end_date){
+        this.id = id;
+        this.start_date = start_date;
+        this.end_date = end_date;
+    }
+    
     public int getId() {
         return id;
     }

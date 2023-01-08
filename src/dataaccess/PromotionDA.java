@@ -1,11 +1,13 @@
 package dataaccess;
 
+import pojo.PromotionPOJO;
+
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pojo.PromotionPOJO;
 
 public class PromotionDA {
     public List<PromotionPOJO> getAllPromotion(){
@@ -371,6 +373,55 @@ public class PromotionDA {
                 pstmt.setBoolean(6, updatePromotion.isCan_anonymous());
                 pstmt.setInt(7, updatePromotion.getId());
 
+                // Execute the statement
+                int rowsUpdated = pstmt.executeUpdate();
+                System.out.println(rowsUpdated + " rows affected");
+                if (rowsUpdated == 0){
+                    // Update promotion's info failed! OR The promotion's new info is the same as the old one
+                    status = -3;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            // Error: SQLException
+            status = -1;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
+    }
+    
+    public int updatePromotionDate(PromotionPOJO updatePromotionDate){
+        int status = 1;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM promo_code WHERE id = ?;";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, updatePromotionDate.getId());
+            rs = pstmt.executeQuery();
+            if(!rs.next()){
+                // Promotion not found
+                status = -2;
+            } else {
+                query = "UPDATE promo_code SET start_date = ?, end_date = ? WHERE id = ?;";
+                pstmt = connection.prepareStatement(query);
+                pstmt.setDate(1, Date.valueOf(updatePromotionDate.getStart_date()));
+                pstmt.setDate(2, Date.valueOf(updatePromotionDate.getEnd_date()));
+                pstmt.setInt(3, updatePromotionDate.getId());
+                
                 // Execute the statement
                 int rowsUpdated = pstmt.executeUpdate();
                 System.out.println(rowsUpdated + " rows affected");
