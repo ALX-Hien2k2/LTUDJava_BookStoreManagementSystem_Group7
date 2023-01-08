@@ -54,13 +54,12 @@ public class PromotionBU {
         PromotionDA da = new PromotionDA();
         return da.closePromotion(promotion_id);
     }
-//    public int disablePromotion(int id){
-//         PromotionDA da = new PromotionDA();
-//         return da.disablePromotion(id);
-//    }
-//    
-//    public int enablePromotion(int id){
-//         PromotionDA da = new PromotionDA();
-//         return da.enablePromotion(id);
-//    }
+    public int disablePromotion(int id){
+         PromotionDA da = new PromotionDA();
+         return da.disablePromotion(id);
+    }
+    public int enablePromotion(int id){
+         PromotionDA da = new PromotionDA();
+         return da.enablePromotion(id);
+    }
 }

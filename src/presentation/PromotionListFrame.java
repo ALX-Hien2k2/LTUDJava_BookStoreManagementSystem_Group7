@@ -553,69 +553,69 @@ public class PromotionListFrame extends JFrame{
             }
         });
         
-//        // Action listener for disable a category button
-//        disable_Button.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                // Check if a row is selected
-//                if (table.getSelectedRow() == -1) {
-//                    // Display a message telling the user to select a category
-//                    JOptionPane.showMessageDialog(null, "Please select a category to disable", "Error", JOptionPane.ERROR_MESSAGE);
-//                } else{
-//                    // Confirm
-//                    int optionResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to disable the category?", "Confirm", JOptionPane.YES_NO_OPTION);
-//                    
-//                    if (optionResult == JOptionPane.YES_OPTION) {
-//                        // Get the Id of the selected category
-//                        int id = (int) table.getValueAt(table.getSelectedRow(), 0);
-//
-//                        System.out.println("id:" + id);
-//
-//                        // Disable category
-//                        int statusCode = business.disableCategory(id);
-//                        String status = "";
-//                        if(statusCode == -1){
-//                            status = "SQL Exception";
-//
-//                            // Notification
-//                            JOptionPane.showMessageDialog(null, status);
-//                        } else if(statusCode == -2){
-//                            status = "Category not found or already be disabled";
-//
-//                            // Notification
-//                            JOptionPane.showMessageDialog(null, status);
-//                        } else if(statusCode == -3){
-//                            status = "Disable category fail!";
-//
-//                            // Notification
-//                            JOptionPane.showMessageDialog(null, status);
-//                        } else{
-//                            status = "Disable category successfully!";
-//
-//                            // Remove the disabled category from the table
-//                            int columnIndex = 0; // id
-//                            Object valueToSearch = Integer.valueOf(id);
-//
-//                            for (int i = 0; i < model.getRowCount(); i++) {
-//                                // Get the value at the specified column of the current row
-//                                Object cellValue = model.getValueAt(i, columnIndex);
-//
-//                                // Check if the value of the cell is equal to the value you are looking for
-//                                if (valueToSearch.equals(cellValue)) {
-//                                    // If the value is found, remove the row from the model
-//                                    model.removeRow(i);
-//                                    break;
-//                                }
-//                            }
-//
-//                            // Notification
-//                            JOptionPane.showMessageDialog(null, status);
-//                        }
-//                    }
-//                }
-//            }
-//        });
-//        
+        // Action listener for disable a promotion button
+        disable_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if a row is selected
+                if (table.getSelectedRow() == -1) {
+                    // Display a message telling the user to select a category
+                    JOptionPane.showMessageDialog(null, "Please select a promotion to disable", "Error", JOptionPane.ERROR_MESSAGE);
+                } else{
+                    // Confirm
+                    int optionResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to disable this promotion?", "Confirm", JOptionPane.YES_NO_OPTION);
+                    
+                    if (optionResult == JOptionPane.YES_OPTION) {
+                        // Get the Id of the selected promotion
+                        int id = (int) table.getValueAt(table.getSelectedRow(), 0);
+
+                        System.out.println("id:" + id);
+
+                        // Disable promotion
+                        int statusCode = business.disablePromotion(id);
+                        String status = "";
+                        if(statusCode == -1){
+                            status = "SQL Exception";
+
+                            // Notification
+                            JOptionPane.showMessageDialog(null, status);
+                        } else if(statusCode == -2){
+                            status = "Promotion not found or already be disabled";
+
+                            // Notification
+                            JOptionPane.showMessageDialog(null, status);
+                        } else if(statusCode == -3){
+                            status = "Disable promotion fail!";
+
+                            // Notification
+                            JOptionPane.showMessageDialog(null, status);
+                        } else{
+                            status = "Disable promotion successfully!";
+
+                            // Remove the disabled promotion from the table
+                            int columnIndex = 0; // id
+                            Object valueToSearch = Integer.valueOf(id);
+
+                            for (int i = 0; i < model.getRowCount(); i++) {
+                                // Get the value at the specified column of the current row
+                                Object cellValue = model.getValueAt(i, columnIndex);
+
+                                // Check if the value of the cell is equal to the value you are looking for
+                                if (valueToSearch.equals(cellValue)) {
+                                    // If the value is found, remove the row from the model
+                                    model.removeRow(i);
+                                    break;
+                                }
+                            }
+
+                            // Notification
+                            JOptionPane.showMessageDialog(null, status);
+                        }
+                    }
+                }
+            }
+        });
+        
 //        // Action listener for disable a category button
 //        disabled_List_Button.addActionListener(new ActionListener() {
 //            @Override

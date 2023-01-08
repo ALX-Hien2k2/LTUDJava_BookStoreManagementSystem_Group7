@@ -447,99 +447,99 @@ public class PromotionDA {
         return status;
     }
     
-//    public int disableCategory(int category_id){
-//        // Disable category successfully!
-//        int status = 1;
-//        Connection connection = null;
-//        Statement statement = null;
-//        PreparedStatement pstmt = null;
-//        ResultSet rs = null;
-//        String query;
-//        try {
-//            connection = MyConnection.create();
-//            statement = connection.createStatement();
-//            query = "SELECT * FROM categories WHERE id = ? AND status = 1;";
-//            pstmt = connection.prepareStatement(query);
-//            pstmt.setInt(1, category_id);
-//            rs = pstmt.executeQuery();
-//            if(!rs.next()){
-//                // Category not found or already be disabled
-//                status = -2;
-//            } else {
-//                query = "UPDATE categories SET status = 0 WHERE id = ?;";
-//                pstmt = connection.prepareStatement(query);
-//                pstmt.setInt(1, category_id);
-//
-//                // Execute the statement
-//                int rowsUpdated = pstmt.executeUpdate();
-//                if (rowsUpdated <= 0) {
-//                    // Disable category fail!
-//                    status = -3;
-//                }
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            // Error: SQL Exception
-//            status = -1;
-//        } finally {
-//            try {
-//                connection.close();
-//                statement.close();
-//                pstmt.close();
-//                rs.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return status;
-//    }
-//    
-//    public int enableCategory(int category_id){
-//        // Enable category successfully!
-//        int status = 1;
-//        Connection connection = null;
-//        Statement statement = null;
-//        PreparedStatement pstmt = null;
-//        ResultSet rs = null;
-//        String query;
-//        try {
-//            connection = MyConnection.create();
-//            statement = connection.createStatement();
-//            query = "SELECT * FROM categories WHERE id = ? AND status = 0;";
-//            pstmt = connection.prepareStatement(query);
-//            pstmt.setInt(1, category_id);
-//            rs = pstmt.executeQuery();
-//            if(!rs.next()){
-//                // Category not found or already be enable
-//                status = -2;
-//            } else {
-//                query = "UPDATE categories SET status = 1 WHERE id = ?;";
-//                pstmt = connection.prepareStatement(query);
-//                pstmt.setInt(1, category_id);
-//
-//                // Execute the statement
-//                int rowsUpdated = pstmt.executeUpdate();
-//                if (rowsUpdated <= 0) {
-//                    // Enable category fail!
-//                    status = -3;
-//                }
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            // Error: SQL Exception
-//            status = -1;
-//        } finally {
-//            try {
-//                connection.close();
-//                statement.close();
-//                pstmt.close();
-//                rs.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return status;
-//    }
+    public int disablePromotion(int promotion_id){
+        // Disable promotion successfully!
+        int status = 1;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM promo_code WHERE id = ? AND isActive = 1;";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, promotion_id);
+            rs = pstmt.executeQuery();
+            if(!rs.next()){
+                // Promotion not found or already be disabled
+                status = -2;
+            } else {
+                query = "UPDATE promo_code SET isActive = 0 WHERE id = ?;";
+                pstmt = connection.prepareStatement(query);
+                pstmt.setInt(1, promotion_id);
+
+                // Execute the statement
+                int rowsUpdated = pstmt.executeUpdate();
+                if (rowsUpdated <= 0) {
+                    // Disable promotion fail!
+                    status = -3;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            // Error: SQL Exception
+            status = -1;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
+    }
+    
+    public int enablePromotion(int promotion_id){
+        // Enable promotion successfully!
+        int status = 1;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM promo_code WHERE id = ? AND isActive = 0;";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, promotion_id);
+            rs = pstmt.executeQuery();
+            if(!rs.next()){
+                // Promotion not found or already be enable
+                status = -2;
+            } else {
+                query = "UPDATE promo_code SET isActive = 1 WHERE id = ?;";
+                pstmt = connection.prepareStatement(query);
+                pstmt.setInt(1, promotion_id);
+
+                // Execute the statement
+                int rowsUpdated = pstmt.executeUpdate();
+                if (rowsUpdated <= 0) {
+                    // Enable category fail!
+                    status = -3;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
+            // Error: SQL Exception
+            status = -1;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
+    }
     
     public String openPromotion(int promotion_id){
         String status = "";
