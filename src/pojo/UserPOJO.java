@@ -97,6 +97,31 @@ public class UserPOJO {
         isActive = active;
     }
 
+<<<<<<< Updated upstream
+=======
+    public boolean changePassword(String newPassword) {
+        if (this.password.equals(newPassword)) {
+            return false;
+        }
+        this.password = newPassword;
+        return true;
+    }
+
+    public UserPOJO sign_up(String username, String password, String password2, int id, String name, String dob, String role, Boolean isActive) {
+        LocalDate dateOfBirth = LocalDate.parse(dob);
+        return new UserPOJO(id, username, password, name, dateOfBirth, role, isActive);
+    }
+
+    public boolean sign_in(String username, String password) {
+        return this.username.equals(username) && this.password.equals(password) && this.isActive;
+    }
+
+    public void update_info(String name, LocalDate dob) {
+        this.fullname = name;
+        this.dob = dob;
+    }
+
+>>>>>>> Stashed changes
     @Override
     public String toString(){
         return id + " ** " + username + " ** " + password + " ** " + fullname + " ** " + dob + " ** " + role + " ** " + isActive;

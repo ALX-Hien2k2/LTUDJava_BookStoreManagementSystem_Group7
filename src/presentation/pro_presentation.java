@@ -4,6 +4,7 @@
  */
 package presentation;
 
+import Main.Main;
 import business.user_business;
 
 /**
@@ -29,7 +30,6 @@ public class pro_presentation extends javax.swing.JFrame {
     private void initComponents() {
 
         jFrame1 = new javax.swing.JFrame();
-        title = new javax.swing.JLabel();
         name = new javax.swing.JLabel();
         email = new javax.swing.JLabel();
         pass = new javax.swing.JLabel();
@@ -41,9 +41,13 @@ public class pro_presentation extends javax.swing.JFrame {
         edit_name = new javax.swing.JButton();
         edit_pass = new javax.swing.JButton();
         edit_dob = new javax.swing.JButton();
-        logout = new javax.swing.JButton();
         day = new javax.swing.JTextField();
         month = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        title = new javax.swing.JLabel();
+        back = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -56,25 +60,33 @@ public class pro_presentation extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        title.setText("Profile");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         name.setText("Name");
+        getContentPane().add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 43, -1, -1));
 
         email.setText("Username");
+        getContentPane().add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 78, -1, -1));
 
         pass.setText("Password");
+        getContentPane().add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 112, -1, -1));
 
-        name_tf.setText(user_presentation.us.getFullname());
+        name_tf.setText(Main.us.getFullname());
+        getContentPane().add(name_tf, new org.netbeans.lib.awtextra.AbsoluteConstraints(111, 40, 197, -1));
 
-        usname_tf.setText(user_presentation.us.getUsername());
+        usname_tf.setText(Main.us.getUsername());
+        getContentPane().add(usname_tf, new org.netbeans.lib.awtextra.AbsoluteConstraints(111, 75, 197, -1));
 
-        pass_tf.setText(user_presentation.us.getPassword());
+        pass_tf.setText(Main.us.getPassword());
+        getContentPane().add(pass_tf, new org.netbeans.lib.awtextra.AbsoluteConstraints(111, 109, 197, -1));
 
         dob_lb.setText("Date of birth");
+        getContentPane().add(dob_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 153, -1, -1));
 
-        year.setText(Integer.toString(user_presentation.us.getDob().getYear()));
+        year.setText(Integer.toString(Main.us.getDob().getYear()));
+        getContentPane().add(year, new org.netbeans.lib.awtextra.AbsoluteConstraints(204, 150, 77, -1));
 
         edit_name.setText("Edit");
         edit_name.addActionListener(new java.awt.event.ActionListener() {
@@ -82,6 +94,7 @@ public class pro_presentation extends javax.swing.JFrame {
                 edit_nameActionPerformed(evt);
             }
         });
+        getContentPane().add(edit_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 40, -1, -1));
 
         edit_pass.setText("Edit");
         edit_pass.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +102,7 @@ public class pro_presentation extends javax.swing.JFrame {
                 edit_passActionPerformed(evt);
             }
         });
+        getContentPane().add(edit_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 109, -1, -1));
 
         edit_dob.setText("Edit");
         edit_dob.addActionListener(new java.awt.event.ActionListener() {
@@ -96,90 +110,73 @@ public class pro_presentation extends javax.swing.JFrame {
                 edit_dobActionPerformed(evt);
             }
         });
+        getContentPane().add(edit_dob, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 150, -1, -1));
 
-        logout.setText("Logout");
-        logout.addActionListener(new java.awt.event.ActionListener() {
+        day.setText(Integer.toString(Main.us.getDob().getDayOfMonth()));
+        getContentPane().add(day, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 150, 28, -1));
+
+        month.setText(Integer.toString(Main.us.getDob().getMonthValue()));
+        getContentPane().add(month, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 28, -1));
+
+        jLabel1.setText("Level: " + Main.us.getRole());
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 191, -1, -1));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
+
+        title.setForeground(new java.awt.Color(255, 255, 255));
+        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title.setText("Profile");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(197, 197, 197)
+                .addComponent(title)
+                .addContainerGap(206, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addComponent(title)
+                .addContainerGap())
+        );
+
+        back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutActionPerformed(evt);
+                backActionPerformed(evt);
             }
         });
 
-        day.setText(Integer.toString(user_presentation.us.getDob().getDayOfMonth()));
-
-        month.setText(Integer.toString(user_presentation.us.getDob().getMonthValue()));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(dob_lb)
-                        .addGap(18, 18, 18)
-                        .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                        .addComponent(edit_dob))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(email)
-                            .addComponent(pass)
-                            .addComponent(name))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(name_tf, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
-                            .addComponent(usname_tf)
-                            .addComponent(pass_tf))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(edit_name)
-                            .addComponent(edit_pass))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(189, 193, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(title)
-                        .addGap(177, 177, 177))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(logout)
-                        .addContainerGap())))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(title)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(name)
-                    .addComponent(name_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edit_name))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(email)
-                    .addComponent(usname_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pass)
-                    .addComponent(pass_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edit_pass))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dob_lb)
-                    .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edit_dob)
-                    .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addComponent(logout)
-                .addGap(25, 25, 25))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(back)
+                .addGap(44, 44, 44))
         );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
+                .addComponent(back)
+                .addGap(33, 33, 33))
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 450, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -187,13 +184,13 @@ public class pro_presentation extends javax.swing.JFrame {
     private void edit_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_passActionPerformed
         // TODO add your handling code here:
         user_business us_bus = new user_business();
-        us_bus.change_pass(new String(pass_tf.getPassword()), user_presentation.us.getId());
+        us_bus.change_pass(new String(pass_tf.getPassword()), Main.us.getId());
     }//GEN-LAST:event_edit_passActionPerformed
 
     private void edit_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_nameActionPerformed
         // TODO add your handling code here:
         user_business us_bus = new user_business();
-        us_bus.update_name(name_tf.getText(), user_presentation.us.getId());
+        us_bus.update_name(name_tf.getText(), Main.us.getId());
     }//GEN-LAST:event_edit_nameActionPerformed
 
     private void edit_dobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_dobActionPerformed
@@ -222,16 +219,14 @@ public class pro_presentation extends javax.swing.JFrame {
                 y = "000" + y;
             }
             String dob = y+"-"+m+"-"+d;
-            us_bus.update_dob(dob, user_presentation.us.getId());
+            us_bus.update_dob(dob, Main.us.getId());
         }
     }//GEN-LAST:event_edit_dobActionPerformed
 
-    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        user_presentation.us = null;
-        user_presentation.login.setVisible(true);
-    }//GEN-LAST:event_logoutActionPerformed
+    }//GEN-LAST:event_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,6 +266,7 @@ public class pro_presentation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton back;
     private javax.swing.JTextField day;
     private javax.swing.JLabel dob_lb;
     private javax.swing.JButton edit_dob;
@@ -278,7 +274,9 @@ public class pro_presentation extends javax.swing.JFrame {
     private javax.swing.JButton edit_pass;
     private javax.swing.JLabel email;
     private javax.swing.JFrame jFrame1;
-    private javax.swing.JButton logout;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField month;
     private javax.swing.JLabel name;
     private javax.swing.JTextField name_tf;

@@ -19,9 +19,19 @@ public class user_business {
         return da.getAllAccount();
     }
 
+<<<<<<< Updated upstream
     public user sign_in(String email, String password) {
         user_da da = new user_da();
         return da.get_acc(email, password);
+=======
+    public UserPOJO sign_in(String email, String password) {
+        UserDA da = new UserDA();
+        UserPOJO user =  da.get_acc(email, password);
+        if(user != null && user.getActive())
+            return user;
+        return null;
+    
+>>>>>>> Stashed changes
     }
 
     public void update_name(String name, int id) {
