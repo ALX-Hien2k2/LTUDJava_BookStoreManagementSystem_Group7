@@ -6,6 +6,7 @@ package dataaccess;
 
 import pojo.book;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +39,8 @@ public class book_da {
                 String author = rs.getString("author.name");
                 boolean isActive = rs.getBoolean("book.isActive");
                 int promo_id = rs.getInt("promo_id");
-                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id);
+                LocalDate day = rs.getDate("date").toLocalDate();
+                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id,day);
                 ans.add(st);
             }
             rs.close();
@@ -72,7 +74,8 @@ public class book_da {
                 String author = rs.getString("author.name");
                 boolean isActive = rs.getBoolean("book.isActive");
                 int promo_id = rs.getInt("promo_id");
-                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id);
+                LocalDate day = rs.getDate("date").toLocalDate();
+                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id,day);
                 ans.add(st);
             }
             rs.close();
@@ -83,7 +86,40 @@ public class book_da {
         }
         return ans;
     }
-
+public List<book> getNewBooks() {
+        List<book> ans = null;
+        try {
+            ans = new ArrayList<>();
+            Connection connection = MyConnection.create();
+            Statement statement;
+            statement = connection.createStatement();
+            String query = "SELECT * FROM book, author, categories, publisher where book.author_id=author.id and book.category_id=categories.id and book.publisher_id = publisher.id order by book.date desc limit 5;";
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double price = rs.getDouble("price");
+                int quantity = rs.getInt("quantity");
+                int author_id = rs.getInt("author_id");
+                int publisher_id = rs.getInt("publisher_id");
+                int category_id = rs.getInt("category_id");
+                String category = rs.getString("categories.name");
+                String publisher = rs.getString("publisher.name");
+                String author = rs.getString("author.name");
+                boolean isActive = rs.getBoolean("book.isActive");
+                int promo_id = rs.getInt("promo_id");
+                LocalDate day = rs.getDate("date").toLocalDate();
+                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id,day);
+                ans.add(st);
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(book_da.class.getName()).log(Level.SEVERE, null, ex);
+            ans = null;
+        }
+        return ans;
+    }
     public boolean check_book_exists(String name) {
         Connection connection = null;
         Statement statement = null;
@@ -195,7 +231,8 @@ public class book_da {
         try {
             connection = MyConnection.create();
             statement = connection.createStatement();
-            String query = "INSERT INTO book(name, price, quantity, author_id, publisher_id, category_id) VALUES(?, ?, ?, ?, ?, ?)";
+            LocalDate l = LocalDate.now();
+            String query = "INSERT INTO book(name, price, quantity, author_id, publisher_id, category_id, date) VALUES(?, ?, ?, ?, ?, ?, ?)";
             pr_statement = connection.prepareStatement(query);
             pr_statement.setString(1, name);
             pr_statement.setDouble(2, price);
@@ -203,6 +240,7 @@ public class book_da {
             pr_statement.setInt(4, author);
             pr_statement.setInt(5, publisher);
             pr_statement.setInt(6, category);
+            pr_statement.setString(7, l.toString());
             int r = pr_statement.executeUpdate();
             return r > 0;
         } catch (SQLException ex) {

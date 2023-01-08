@@ -4,6 +4,8 @@
  */
 package pojo;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author TIN
@@ -21,11 +23,12 @@ public class book {
     String category;
     boolean isActive;
     int promo_id;
+    LocalDate day;
     public book() {
         
     }
 
-    public book(int id, String name, double price, int quantity, int author_id, int publisher_id, int category_id, String author, String publisher, String category, boolean isActive, int promo_id) {
+    public book(int id, String name, double price, int quantity, int author_id, int publisher_id, int category_id, String author, String publisher, String category, boolean isActive, int promo_id, LocalDate day) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -38,7 +41,18 @@ public class book {
         this.category = category;
         this.isActive = isActive;
         this.promo_id = promo_id;
+        this.day = day;
     }
+
+    public LocalDate getDay() {
+        return day;
+    }
+
+    public void setDay(LocalDate day) {
+        this.day = day;
+    }
+
+ 
 
     public int getPromo_id() {
         return promo_id;

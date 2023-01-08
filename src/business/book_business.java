@@ -18,7 +18,10 @@ public class book_business {
         book_da da = new book_da();
         return da.getAll();
     }
-
+public List<book> getNewBooks() {
+        book_da da = new book_da();
+        return da.getNewBooks();
+    }
     public List<book> getOutOfStock() {
         book_da da = new book_da();
         return da.getOutOfStock();

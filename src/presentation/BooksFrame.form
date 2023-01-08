@@ -82,16 +82,24 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="cate_tf" min="-2" pref="240" max="-2" attributes="0"/>
                           <Component id="name_tf" min="-2" pref="240" max="-2" attributes="0"/>
@@ -140,12 +148,12 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="author_tf" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel5" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="publisher_tf" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel5" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -259,19 +267,6 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Add book to order"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="520" y="330" width="-1" height="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
         <Component class="javax.swing.JButton" name="refresh">
           <Properties>
             <Property name="text" type="java.lang.String" value="Refresh"/>
@@ -281,7 +276,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="430" y="330" width="-1" height="-1"/>
+              <AbsoluteConstraints x="570" y="330" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -303,7 +298,7 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="tableModel" type="code"/>
                 </Property>
-                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" preCode="table.getModel().addTableModelListener(new TableModelListener() {&#xa; public void tableChanged(TableModelEvent e) {&#xa;        int row = e.getFirstRow();&#xa;        int column = e.getColumn();&#xa;        TableModel model = (TableModel)e.getSource();&#xa;        String columnName = model.getColumnName(column);&#xa;        if(column == 8){&#xa;        int data =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;        book_bsn.Disable_book(data);&#xa;&#xa;return;&#xa;        }&#xa;else if(columnName.equals(&quot;Book&quot;)) {&#xa;        String data = model.getValueAt(row, column).toString();&#xa;        if (book_bsn.check_name_exists(data)) {&#xa;            Notice_book.setText(&quot;Book is exists&quot;);&#xa;&#xa;            return;&#xa;        }&#xa;        else {&#xa;            int id =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;            book_bsn.update_string(data, id);&#xa;            Notice_book.setText(&quot;Complete&quot;);&#xa;return;&#xa;        }&#xa;}&#xa;else if(columnName.equals(&quot;Price&quot;)) {&#xa;        Double data = Double.parseDouble(model.getValueAt(row, column).toString());&#xa;                         if (data &lt; 0) {&#xa;                        Notice_book.setText(&quot;Invalid input&quot;);&#xa;                        return;&#xa;                    }&#xa;            int id =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;            book_bsn.update_double(data, id);&#xa;  &#xa;&#xa;return;&#xa;}&#xa;else if(columnName.equals(&quot;Quantity&quot;)) {&#xa;        int data = Integer.parseInt(model.getValueAt(row, column).toString());&#xa;                         if (data &lt; 0) {&#xa;                        Notice_book.setText(&quot;Invalid input&quot;);&#xa;                        return;&#xa;                    }&#xa;            int id =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;            book_bsn.update_int(data, id, columnName);&#xa; &#xa;return;&#xa;}&#xa;else if(columnName.equals(&quot;PromoId&quot;)) {&#xa;        int data = Integer.parseInt(model.getValueAt(row, column).toString());&#xa;     if(!book_bsn.check_promo_exists(data)){&#xa;Notice_book.setText(&quot;Unknown promo code id&quot;);&#xa;return;&#xa;}&#xa;            int id =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;            book_bsn.update_int(data, id, columnName);&#xa; &#xa;return;&#xa;}&#xa;else if(!columnName.equals(&quot;Id&quot;)) {&#xa;        String data = model.getValueAt(row, column).toString();&#xa;        int value = book_bsn.check_id_by_name(data, columnName);&#xa;        if (value == -1) {&#xa;            Notice_book.setText(&quot;Unknown input&quot;);&#xa;&#xa;return;&#xa;        }&#xa;        else {&#xa;            int id =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;            book_bsn.update_int(value, id, columnName);&#xa;Notice_book.setText(&quot;Complete&quot;);&#xa;&#xa;return;&#xa;        }&#xa;}&#xa;        &#xa;&#xa;    }&#xa;&#xa;});">
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" preCode="table.getModel().addTableModelListener(new TableModelListener() {&#xa; public void tableChanged(TableModelEvent e) {&#xa;        int row = e.getFirstRow();&#xa;        int column = e.getColumn();&#xa;        TableModel model = (TableModel)e.getSource();&#xa;        String columnName = model.getColumnName(column);&#xa;        if(column == 8){&#xa;        int data =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;        book_bsn.Disable_book(data);&#xa;&#xa;return;&#xa;        }&#xa;else if(columnName.equals(&quot;Book&quot;)) {&#xa;        String data = model.getValueAt(row, column).toString();&#xa;        if (book_bsn.check_name_exists(data)) {&#xa;            Notice_book.setText(&quot;Book is exists&quot;);&#xa;&#xa;            return;&#xa;        }&#xa;        else {&#xa;            int id =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;            book_bsn.update_string(data, id);&#xa;            Notice_book.setText(&quot;Complete&quot;);&#xa;return;&#xa;        }&#xa;}&#xa;else if(columnName.equals(&quot;Price&quot;)) {&#xa;        Double data = Double.parseDouble(model.getValueAt(row, column).toString());&#xa;                         if (data &lt; 0) {&#xa;                        Notice_book.setText(&quot;Invalid input&quot;);&#xa;                        return;&#xa;                    }&#xa;            int id =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;            book_bsn.update_double(data, id);&#xa;  &#xa;Notice_book.setText(&quot;Complete&quot;);&#xa;return;&#xa;}&#xa;else if(columnName.equals(&quot;Quantity&quot;)) {&#xa;        int data = Integer.parseInt(model.getValueAt(row, column).toString());&#xa;                         if (data &lt; 0) {&#xa;                        Notice_book.setText(&quot;Invalid input&quot;);&#xa;                        return;&#xa;                    }&#xa;            int id =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;            book_bsn.update_int(data, id, columnName);&#xa; Notice_book.setText(&quot;Complete&quot;);&#xa;return;&#xa;}&#xa;else if(columnName.equals(&quot;PromoId&quot;)) {&#xa;        int data = Integer.parseInt(model.getValueAt(row, column).toString());&#xa;     if(!book_bsn.check_promo_exists(data)){&#xa;Notice_book.setText(&quot;Unknown promo code id&quot;);&#xa;return;&#xa;}&#xa;            int id =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;            book_bsn.update_int(data, id, columnName);&#xa; Notice_book.setText(&quot;Complete&quot;);&#xa;return;&#xa;}&#xa;else if(!columnName.equals(&quot;Id&quot;) &amp;&amp; !columnName.equals(&quot;Time Adding&quot;)) {&#xa;        String data = model.getValueAt(row, column).toString();&#xa;        int value = book_bsn.check_id_by_name(data, columnName);&#xa;        if (value == -1) {&#xa;            Notice_book.setText(&quot;Unknown input&quot;);&#xa;&#xa;return;&#xa;        }&#xa;        else {&#xa;            int id =Integer.parseInt( model.getValueAt(row, 0).toString());&#xa;            book_bsn.update_int(value, id, columnName);&#xa;Notice_book.setText(&quot;Complete&quot;);&#xa;&#xa;return;&#xa;        }&#xa;}&#xa;        &#xa;&#xa;    }&#xa;&#xa;});">
                   <TableColumnModel selectionModel="0"/>
                 </Property>
                 <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -315,8 +310,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="List&lt;book&gt; books = book_bsn.getAll();&#xa;        books = book_bsn.getAll();&#xa;        Object obj[][] = new Object[books.size()][9];&#xa;        String[] columnNames = {&quot;Id&quot;, &quot;Book&quot;, &quot;Price&quot;, &quot;Quantity&quot;, &quot;Author&quot;, &quot;Publisher&quot;, &quot;Category&quot;,&quot;PromoId&quot;, &quot;isActive&quot;};&#xa;        int count = 0;&#xa;        for (int i = 0; i &lt; books.size(); i++) {&#xa;            boolean isActive = books.get(i).isIsActive();&#xa;            if (!isActive) {&#xa;                count++;&#xa;                continue;&#xa;            }&#xa;            int id = books.get(i).getId();&#xa;            String name = books.get(i).getName();&#xa;            Double price = books.get(i).getPrice();&#xa;            int quantity = books.get(i).getQuantity();&#xa;            String author = books.get(i).getAuthor();&#xa;            String publisher = books.get(i).getPublisher();&#xa;            String category = books.get(i).getCategory();&#xa;            int promo=books.get(i).getPromo_id();&#xa;            obj[i][0] = id;&#xa;            obj[i][1] = name;&#xa;            obj[i][2] = price;&#xa;            obj[i][3] = quantity;&#xa;            obj[i][4] = author;&#xa;            obj[i][5] = publisher;&#xa;            obj[i][6] = category;&#xa;            obj[i][7] = promo;&#xa;            obj[i][8] = isActive;&#xa;        }&#xa;        int size = books.size()-count;&#xa;        Object newObj[][] = new Object[size][9];&#xa;        int j = 0;&#xa;        for(int i = 0;i&lt;books.size();i++){&#xa;            if(obj[i][0]!=null){&#xa;             &#xa;                newObj[j]=obj[i];&#xa;j++;&#xa;            }&#xa;&#xa;     &#xa;        }"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel tableModel = new DefaultTableModel(newObj, columnNames){&#xa;            @Override&#xa;            public Class getColumnClass(int column) {&#xa;                switch (column) {&#xa;                    case 0:&#xa;                        return Integer.class;&#xa;                    case 1:&#xa;                        return String.class;&#xa;                    case 2:&#xa;                        return Double.class;&#xa;                    case 3:&#xa;                        return Integer.class;&#xa;                    case 4:&#xa;                        return String.class;&#xa;                    case 5:&#xa;                        return String.class;&#xa;                    case 6:&#xa;                        return String.class;&#xa;                    case 7:&#xa;                        return Integer.class;&#xa;                    case 8:&#xa;                        return Boolean.class;&#xa;                    default:&#xa;                        return String.class;&#xa;                }&#xa;            }&#xa;        };"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="List&lt;book&gt; books = book_bsn.getAll();&#xa;        books = book_bsn.getAll();&#xa;        Object obj[][] = new Object[books.size()][10];&#xa;        String[] columnNames = {&quot;Id&quot;, &quot;Book&quot;, &quot;Price&quot;, &quot;Quantity&quot;, &quot;Author&quot;, &quot;Publisher&quot;, &quot;Category&quot;, &quot;PromoId&quot;, &quot;isActive&quot;, &quot;Time Adding&quot;};&#xa;        int count = 0;&#xa;        for (int i = 0; i &lt; books.size(); i++) {&#xa;            boolean isActive = books.get(i).isIsActive();&#xa;            if (!isActive) {&#xa;                count++;&#xa;                continue;&#xa;            }&#xa;            int id = books.get(i).getId();&#xa;            String name = books.get(i).getName();&#xa;            Double price = books.get(i).getPrice();&#xa;            int quantity = books.get(i).getQuantity();&#xa;            String author = books.get(i).getAuthor();&#xa;            String publisher = books.get(i).getPublisher();&#xa;            String category = books.get(i).getCategory();&#xa;            int promo = books.get(i).getPromo_id();&#xa;            LocalDate day = books.get(i).getDay();&#xa;            obj[i][0] = id;&#xa;            obj[i][1] = name;&#xa;            obj[i][2] = price;&#xa;            obj[i][3] = quantity;&#xa;            obj[i][4] = author;&#xa;            obj[i][5] = publisher;&#xa;            obj[i][6] = category;&#xa;            obj[i][7] = promo;&#xa;            obj[i][8] = isActive;&#xa;            obj[i][9] = day;&#xa;        }&#xa;        int size = books.size() - count;&#xa;        Object newObj[][] = new Object[size][10];&#xa;        int j = 0;&#xa;        for (int i = 0; i &lt; books.size(); i++) {&#xa;            if (obj[i][0] != null) {&#xa;&#xa;                newObj[j] = obj[i];&#xa;                j++;&#xa;            }&#xa;&#xa;        }&#xa;        DefaultTableModel tableModel = new DefaultTableModel(newObj, columnNames) {&#xa;            @Override&#xa;            public Class getColumnClass(int column) {&#xa;                return switch (column) {&#xa;                    case 0 -&gt;&#xa;                        Integer.class;&#xa;                    case 1 -&gt;&#xa;                        String.class;&#xa;                    case 2 -&gt;&#xa;                        Double.class;&#xa;                    case 3 -&gt;&#xa;                        Integer.class;&#xa;                    case 4 -&gt;&#xa;                        String.class;&#xa;                    case 5 -&gt;&#xa;                        String.class;&#xa;                    case 6 -&gt;&#xa;                        String.class;&#xa;                    case 7 -&gt;&#xa;                        Integer.class;&#xa;                    case 8 -&gt;&#xa;                        Boolean.class;&#xa;                    case 9 -&gt;&#xa;                        LocalDate.class;&#xa;                    default -&gt;&#xa;                        String.class;&#xa;                };&#xa;            }&#xa;        };"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -325,6 +319,19 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="30" y="340" width="170" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="View New Book"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="310" y="420" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
