@@ -80,7 +80,7 @@ public class PromotionListFrame extends JFrame{
         disable_Button = new JButton("Disable/Hide");
         disabled_List_Button = new JButton("View list");
         
-        open_close_Button = new JButton("Close");
+        open_close_Button = new JButton("Open/Close");
         
         addNewPromotionButton =  new JButton("Add");
         
@@ -204,7 +204,7 @@ public class PromotionListFrame extends JFrame{
 
         // Create a panel for the close button
         open_close_Panel = new JPanel();
-        open_close_Panel.add(new JLabel("Close Promotion:"));
+        open_close_Panel.add(new JLabel("Open/Close Promotion:"));
         open_close_Panel.add(open_close_Button);
         
         // Create a panel for the add new promotion button
@@ -228,6 +228,7 @@ public class PromotionListFrame extends JFrame{
         actionPanel.add(searchPanel);
         actionPanel.add(filterPanel);
         actionPanel.add(disable_Panel);
+        actionPanel.add(open_close_Panel);
         actionPanel.add(addNewPromotionPanel);
         actionPanel.add(updateDatePanel);
         actionPanel.add(updateInfoPanel);
@@ -660,18 +661,18 @@ public class PromotionListFrame extends JFrame{
                 // Check if a row is selected
                 if (table.getSelectedRow() == -1) {
                     // Display a message telling the user to select an account
-                    JOptionPane.showMessageDialog(null, "Please select an promotion to close", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please select an promotion to open/close", "Error", JOptionPane.ERROR_MESSAGE);
                 } else{
-                    // Get the ID and status of the selected account
+                    // Get the ID and status of the selected promotion
                     int id = (int) table.getValueAt(table.getSelectedRow(), 0);
-                    Boolean isOpen = (Boolean) table.getValueAt(table.getSelectedRow(), 10);
+                    Boolean isOpen = (Boolean) table.getValueAt(table.getSelectedRow(), 9);
 
                     System.out.println("id:" + id);
                     System.out.println("isOpen:" + isOpen);
 
                     String status;
                     int row = table.getSelectedRow();
-                    int column = 10;
+                    int column = 9;
                     if (isOpen) {
                         // Close promotion
                         status = business.closePromotion(id);

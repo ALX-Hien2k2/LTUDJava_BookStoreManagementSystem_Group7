@@ -540,4 +540,108 @@ public class PromotionDA {
 //        }
 //        return status;
 //    }
+    
+    public String openPromotion(int promotion_id){
+        String status = "";
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM promo_code WHERE id = ?;";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, promotion_id);
+            rs = pstmt.executeQuery();
+            if(!rs.next()){
+                // Promotion not found
+                status = "Promotion not exists!";
+            } else {
+                Boolean isOpen = rs.getBoolean("isOpen");
+                if(isOpen){
+                    // Promotion already opened
+                    status = "Promotion already opened!";
+                } else {
+                    query = "UPDATE promo_code SET isOpen = 1 WHERE id = ?;";
+                    pstmt = connection.prepareStatement(query);
+                    pstmt.setInt(1, promotion_id);
+
+                    // Execute the statement
+                    int rowsUpdated = pstmt.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        status = "Open promotion successfully!";
+                    } else {
+                        status = "Open promotion fail!";
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            status = "Error: SQLException";
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
+    }
+    
+    public String closePromotion(int promotion_id){
+        String status = "";
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM promo_code WHERE id = ?;";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, promotion_id);
+            rs = pstmt.executeQuery();
+            if(!rs.next()){
+                // Promotion not found
+                status = "Promotion not exists!";
+            } else {
+                Boolean isOpen = rs.getBoolean("isOpen");
+                if(!isOpen){
+                    // Promotion already closed
+                    status = "Promotion already closed!";
+                } else {
+                    query = "UPDATE promo_code SET isOpen = 0 WHERE id = ?;";
+                    pstmt = connection.prepareStatement(query);
+                    pstmt.setInt(1, promotion_id);
+
+                    // Execute the statement
+                    int rowsUpdated = pstmt.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        status = "Close promotion successfully!";
+                    } else {
+                        status = "Close promotion fail!";
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            status = "Error: SQLException";
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PromotionDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
+    }
 }

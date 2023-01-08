@@ -45,7 +45,15 @@ public class PromotionBU {
          PromotionDA da = new PromotionDA();
          return da.updatePromotionDate(updatePromotionDate);
     }
-//    
+
+    public String openPromotion(int promotion_id){
+        PromotionDA da = new PromotionDA();
+        return da.openPromotion(promotion_id);
+    }
+    public String closePromotion(int promotion_id){
+        PromotionDA da = new PromotionDA();
+        return da.closePromotion(promotion_id);
+    }
 //    public int disablePromotion(int id){
 //         PromotionDA da = new PromotionDA();
 //         return da.disablePromotion(id);
