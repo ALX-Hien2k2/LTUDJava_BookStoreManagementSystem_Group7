@@ -16,9 +16,19 @@ public class PublisherBU {
         return da.getAllPublisher();
     }
 
+    public List<PublisherPOJO> getAllDisabledPublisher() {
+        PublisherDA da = new PublisherDA();
+        return da.getAllDisabledPublisher();
+    }
+
     public List<PublisherPOJO> searchPublisher(String publisherName) {
         PublisherDA da = new PublisherDA();
         return da.searchPublisher(publisherName);
+    }
+
+    public List<PublisherPOJO> searchDisabledPublisher(String name) {
+        PublisherDA da = new PublisherDA();
+        return da.searchDisabledPublisher(name);
     }
 
     public int insertPublisher(PublisherPOJO newPublisher) {
@@ -30,9 +40,14 @@ public class PublisherBU {
         PublisherDA da = new PublisherDA();
         return da.updatePublisher(publisherI);
     }
-    
-     public int disablePublisher(int id){
-         PublisherDA da = new PublisherDA();
-         return da.disablePublisher(id);
+
+    public int disablePublisher(int id) {
+        PublisherDA da = new PublisherDA();
+        return da.disablePublisher(id);
+    }
+
+    public int enablePublisher(int id) {
+        PublisherDA da = new PublisherDA();
+        return da.enablePublisher(id);
     }
 }

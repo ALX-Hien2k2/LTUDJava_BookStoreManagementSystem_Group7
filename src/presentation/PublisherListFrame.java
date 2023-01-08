@@ -233,68 +233,113 @@ public class PublisherListFrame extends JFrame {
             }
         });
 
-        // Action listener for disable a category button
+        // Action listener for disable a publisher button
         disable_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Check if a row is selected
                 if (table.getSelectedRow() == -1) {
-                    // Display a message telling the user to select a category
+                    // Display a message telling the user to select a publisher
                     JOptionPane.showMessageDialog(null, "Please select a publisher to disable", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    // Get the Id of the selected category
-                    int id = (int) table.getValueAt(table.getSelectedRow(), 0);
+                    // Confirm
+                    int optionResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to disable the publisher?", "Confirm", JOptionPane.YES_NO_OPTION);
 
-                    System.out.println("id:" + id);
+                    if (optionResult == JOptionPane.YES_OPTION) {
+                        // Get the Id of the selected publisher
+                        int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 
-                    // Disable category
-                    int statusCode = business.disablePublisher(id);
-                    String status = "";
-                    if (statusCode == -1) {
-                        status = "SQL Exception";
+                        System.out.println("id:" + id);
 
-                        // Notification
-                        JOptionPane.showMessageDialog(null, status);
-                    } else if (statusCode == -2) {
-                        status = "Publisher not found or already be disabled";
+                        // Disable publisher
+                        int statusCode = business.disablePublisher(id);
+                        String status = "";
+                        if (statusCode == -1) {
+                            status = "SQL Exception";
 
-                        // Notification
-                        JOptionPane.showMessageDialog(null, status);
-                    } else if (statusCode == -3) {
-                        status = "Disable publisher fail!";
+                            // Notification
+                            JOptionPane.showMessageDialog(null, status);
+                        } else if (statusCode == -2) {
+                            status = "Publisher not found or already be disabled";
 
-                        // Notification
-                        JOptionPane.showMessageDialog(null, status);
-                    } else {
-                        status = "Disable publisher successfully!";
+                            // Notification
+                            JOptionPane.showMessageDialog(null, status);
+                        } else if (statusCode == -3) {
+                            status = "Disable publisherfail!";
 
-                        // Remove the disabled category from the table
-                        int columnIndex = 0; // id
-                        Object valueToSearch = Integer.valueOf(id);
+                            // Notification
+                            JOptionPane.showMessageDialog(null, status);
+                        } else {
+                            status = "Disable publisher successfully!";
 
-                        for (int i = 0; i < model.getRowCount(); i++) {
-                            // Get the value at the specified column of the current row
-                            Object cellValue = model.getValueAt(i, columnIndex);
+                            // Remove the disabled publisher from the table
+                            int columnIndex = 0; // id
+                            Object valueToSearch = Integer.valueOf(id);
 
-                            // Check if the value of the cell is equal to the value you are looking for
-                            if (valueToSearch.equals(cellValue)) {
-                                // If the value is found, remove the row from the model
-                                model.removeRow(i);
-                                break;
+                            for (int i = 0; i < model.getRowCount(); i++) {
+                                // Get the value at the specified column of the current row
+                                Object cellValue = model.getValueAt(i, columnIndex);
+
+                                // Check if the value of the cell is equal to the value you are looking for
+                                if (valueToSearch.equals(cellValue)) {
+                                    // If the value is found, remove the row from the model
+                                    model.removeRow(i);
+                                    break;
+                                }
                             }
+                            // Notification
+                            JOptionPane.showMessageDialog(null, status);
                         }
-
-                        // Notification
-                        JOptionPane.showMessageDialog(null, status);
                     }
                 }
             }
         });
 
-        // Action listener for update publisher's info button
-        updateButton.addActionListener(new ActionListener() {
+        disabled_List_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Disable the old frame
+                setEnabled(false);
+
+                DisabledPublisherListFrame disabledPublisherListFrame = new DisabledPublisherListFrame(new DisabledPublisherListFrame.PublisherEnabled() {
+                    public void publisherEnabled(int id, String name, String country) {
+                        // Add a row to the table model
+                        model.addRow(new Object[]{
+                            id,
+                            name,
+                            country
+                        });
+                    }
+                });
+
+                // Add a listener to the addUserFrame's window closing event
+                disabledPublisherListFrame.addWindowListener(new WindowAdapter() {
+                    public void windowClosed(WindowEvent e) {
+                        System.out.println("windowClosed");
+                        // Enable the old frame
+                        setEnabled(true);
+                        setVisible(true);
+                    }
+
+                    public void windowClosing(WindowEvent e) {
+                        System.out.println("windowClosing");
+                        // Enable the old frame
+                        setEnabled(true);
+                        setVisible(true);
+                    }
+                });
+
+                // Make the addUserFrame visible
+                disabledPublisherListFrame.setVisible(true);
+            }
+        });
+
+        // Action listener for update publisher's info button
+        updateButton.addActionListener(
+                new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e
+            ) {
                 // Check if a row is selected
                 if (table.getSelectedRow() == -1) {
                     // Display a message telling the user to select an account
@@ -349,6 +394,7 @@ public class PublisherListFrame extends JFrame {
                     updatePublisherFrame.setVisible(true);
                 }
             }
-        });
+        }
+        );
     }
 }

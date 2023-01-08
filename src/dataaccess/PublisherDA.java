@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import pojo.PublisherPOJO;
 
 public class PublisherDA {
+
     public PublisherPOJO getPublisher(int id) {
         PublisherPOJO ans = null;
         Connection connection = null;
@@ -73,6 +74,40 @@ public class PublisherDA {
         return ans;
     }
 
+    public List<PublisherPOJO> getAllDisabledPublisher() {
+        List<PublisherPOJO> ans = null;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet rs = null;
+        try {
+            ans = new ArrayList<>();
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            String query = "SELECT * FROM publisher WHERE status = 0";
+            rs = statement.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String country = rs.getString("country");
+                boolean status = rs.getBoolean("status");
+                PublisherPOJO publisher = new PublisherPOJO(id, name, country, status);
+                ans.add(publisher);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            ans = null;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return ans;
+    }
+
     public List<PublisherPOJO> searchPublisher(String publisherName) {
         List<PublisherPOJO> ans = null;
         Connection connection = null;
@@ -91,7 +126,45 @@ public class PublisherDA {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String country = rs.getString("country");
-                Boolean status = rs.getBoolean("status");
+                boolean status = rs.getBoolean("status");
+                PublisherPOJO publisher = new PublisherPOJO(id, name, country, status);
+                ans.add(publisher);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            ans = null;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return ans;
+    }
+
+    public List<PublisherPOJO> searchDisabledPublisher(String publisherName) {
+        List<PublisherPOJO> ans = null;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            ans = new ArrayList<>();
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            String query = "SELECT * FROM publisher WHERE status = 0 AND name like ?";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, String.format("%%%s%%", publisherName));
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String country = rs.getString("country");
+                boolean status = rs.getBoolean("status");
                 PublisherPOJO publisher = new PublisherPOJO(id, name, country, status);
                 ans.add(publisher);
             }
@@ -127,7 +200,7 @@ public class PublisherDA {
             pstmt.setString(1, newPublisher.getName());
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                // The category's name already exists
+                // The publisher's name already exists
                 insertedId = -2;
             } else {
                 query = "INSERT INTO publisher (name, country) VALUES (?, ?);";
@@ -195,7 +268,7 @@ public class PublisherDA {
                 int rowsUpdated = pstmt.executeUpdate();
                 System.out.println(rowsUpdated + " rows affected");
                 if (rowsUpdated == 0) {
-                    // Update account's info failed! OR The category's new info is the same as the old one
+                    // Update account's info failed! OR The publisher's new info is the same as the old one
                     status = -3;
                 }
             }
@@ -217,7 +290,7 @@ public class PublisherDA {
     }
 
     public int disablePublisher(int publisher_id) {
-        // Disable category successfully!
+        // Disable publisher successfully!
         int status = 1;
         Connection connection = null;
         Statement statement = null;
@@ -242,7 +315,54 @@ public class PublisherDA {
                 // Execute the statement
                 int rowsUpdated = pstmt.executeUpdate();
                 if (rowsUpdated <= 0) {
-                    // Disable category fail!
+                    // Disable publisher fail!
+                    status = -3;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            // Error: SQL Exception
+            status = -1;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
+    }
+
+    public int enablePublisher(int publisher_id) {
+        // Enable publisher successfully!
+        int status = 1;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM publisher WHERE id = ? AND status = 0";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, publisher_id);
+            rs = pstmt.executeQuery();
+            if (!rs.next()) {
+                // Category not found or already be enable
+                status = -2;
+            } else {
+                query = "UPDATE publisher SET status = 1 WHERE id = ?";
+                pstmt = connection.prepareStatement(query);
+                pstmt.setInt(1, publisher_id);
+
+                // Execute the statement
+                int rowsUpdated = pstmt.executeUpdate();
+                if (rowsUpdated <= 0) {
+                    // Enable publisher fail!
                     status = -3;
                 }
             }
