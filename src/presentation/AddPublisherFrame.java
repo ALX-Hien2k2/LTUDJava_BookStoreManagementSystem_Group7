@@ -13,7 +13,7 @@ import java.awt.event.ItemListener;
 
 public class AddPublisherFrame extends JFrame {
     public interface PublisherInserted {
-        public void publisherInserted(int id, String name, String country, boolean status);
+        public void publisherInserted(int id, String name, String country);
     }
     private PublisherInserted callback;
     private JLabel nameLabel, countryLabel;
@@ -83,7 +83,6 @@ public class AddPublisherFrame extends JFrame {
                     // Get the user input
                     String name = nameField.getText();
                     String country = countryField.getText();
-                    Boolean status = true;
 
                     // Add user input info into CategoryPOJO
                     PublisherPOJO newPublisher = new PublisherPOJO(name, country);
@@ -117,7 +116,7 @@ public class AddPublisherFrame extends JFrame {
                         insertStatus = "Publisher added successfully";
 
                         // Call the callback function when the insert is complete
-                        callback.publisherInserted(insertId, name, country, status);
+                        callback.publisherInserted(insertId, name, country);
 
                         // Pop up notification
                         JOptionPane.showMessageDialog(null, insertStatus);

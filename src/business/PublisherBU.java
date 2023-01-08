@@ -11,9 +11,9 @@ public class PublisherBU {
         return da.getPublisher(id);
     }
 
-    public List<PublisherPOJO> getAll() {
+    public List<PublisherPOJO> getAllPublisher() {
         PublisherDA da = new PublisherDA();
-        return da.getAll();
+        return da.getAllPublisher();
     }
 
     public List<PublisherPOJO> searchPublisher(String publisherName) {
@@ -29,5 +29,10 @@ public class PublisherBU {
     public int updatePublisher(PublisherPOJO publisherI) {
         PublisherDA da = new PublisherDA();
         return da.updatePublisher(publisherI);
+    }
+    
+     public int disablePublisher(int id){
+         PublisherDA da = new PublisherDA();
+         return da.disablePublisher(id);
     }
 }

@@ -10,7 +10,8 @@ import java.awt.event.*;
 import java.util.Comparator;
 import java.util.List;
 
-public class PublisherListFrame extends JFrame{
+public class PublisherListFrame extends JFrame {
+
     private DefaultTableModel model;
     private JTable table;
     private JScrollPane scroll;
@@ -32,7 +33,7 @@ public class PublisherListFrame extends JFrame{
     private JPanel updatePanel;
 
     private JPanel actionPanel;
-    private String headers[] = { "ID", "Name", "Country", "Status"};
+    private String headers[] = {"ID", "Name", "Country"};
     private PublisherBU business;
     private List<PublisherPOJO> publishers;
 
@@ -55,7 +56,7 @@ public class PublisherListFrame extends JFrame{
         table = new JTable();
 
         business = new PublisherBU();
-        publishers = business.getAll();
+        publishers = business.getAllPublisher();
 
         searchField = new JTextField(); // Search by name
         searchField.setPreferredSize(new Dimension(200, 30));
@@ -65,7 +66,7 @@ public class PublisherListFrame extends JFrame{
 
         disabled_List_Button = new JButton("View list");
 
-        addNewPublisherButton =  new JButton("Add");
+        addNewPublisherButton = new JButton("Add");
 
         updateButton = new JButton("Update");
 
@@ -82,14 +83,10 @@ public class PublisherListFrame extends JFrame{
         TableColumn name_column = table.getColumnModel().getColumn(1); // name
         name_column.setPreferredWidth(500);
         name_column.setResizable(false);
-        
-         TableColumn country_column = table.getColumnModel().getColumn(2); // name
+
+        TableColumn country_column = table.getColumnModel().getColumn(2); // country
         country_column.setPreferredWidth(300);
         country_column.setResizable(false);
-        
-         TableColumn status_column = table.getColumnModel().getColumn(3); // name
-        status_column.setPreferredWidth(100);
-        status_column.setResizable(false);
 
         table.getTableHeader().setReorderingAllowed(false);
 
@@ -125,12 +122,11 @@ public class PublisherListFrame extends JFrame{
 
         // Add data to table
         for (PublisherPOJO publisher : publishers) {
-            model.addRow(new Object[] {
-                    publisher.getId(),
-                    publisher.getName(),
-                    publisher.getCountry(),
-                    publisher.getStatus(),
-            });
+            model.addRow(new Object[]{
+                publisher.getId(),
+                publisher.getName(),
+                publisher.getCountry(),
+                publisher.getStatus(),});
         }
 
         // Create a panel for the search field and button
@@ -190,12 +186,10 @@ public class PublisherListFrame extends JFrame{
 
                 // Add the search results to the table model
                 for (PublisherPOJO result : searchResults) {
-                    model.addRow(new Object[] {
-                            result.getId(),
-                            result.getName(),
-                            result.getCountry(),
-                            result.getStatus(),
-                    });
+                    model.addRow(new Object[]{
+                        result.getId(),
+                        result.getName(),
+                        result.getCountry(),});
                 }
             }
         });
@@ -208,14 +202,12 @@ public class PublisherListFrame extends JFrame{
                 setEnabled(false);
 
                 AddPublisherFrame addPublisherFrame = new AddPublisherFrame(new AddPublisherFrame.PublisherInserted() {
-                    public void publisherInserted(int id, String name, String country, boolean status) {
+                    public void publisherInserted(int id, String name, String country) {
                         // Add a row to the table model
                         model.addRow(new Object[]{
-                                id,
-                                name,
-                                country,
-                                status
-                        });
+                            id,
+                            name,
+                            country,});
                     }
                 });
 
@@ -227,6 +219,7 @@ public class PublisherListFrame extends JFrame{
                         setEnabled(true);
                         setVisible(true);
                     }
+
                     public void windowClosing(WindowEvent e) {
                         System.out.println("windowClosing");
                         // Enable the old frame
@@ -239,8 +232,66 @@ public class PublisherListFrame extends JFrame{
                 addPublisherFrame.setVisible(true);
             }
         });
-        
-                // Action listener for update publisher's info button
+
+        // Action listener for disable a category button
+        disable_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if a row is selected
+                if (table.getSelectedRow() == -1) {
+                    // Display a message telling the user to select a category
+                    JOptionPane.showMessageDialog(null, "Please select a publisher to disable", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Get the Id of the selected category
+                    int id = (int) table.getValueAt(table.getSelectedRow(), 0);
+
+                    System.out.println("id:" + id);
+
+                    // Disable category
+                    int statusCode = business.disablePublisher(id);
+                    String status = "";
+                    if (statusCode == -1) {
+                        status = "SQL Exception";
+
+                        // Notification
+                        JOptionPane.showMessageDialog(null, status);
+                    } else if (statusCode == -2) {
+                        status = "Publisher not found or already be disabled";
+
+                        // Notification
+                        JOptionPane.showMessageDialog(null, status);
+                    } else if (statusCode == -3) {
+                        status = "Disable publisher fail!";
+
+                        // Notification
+                        JOptionPane.showMessageDialog(null, status);
+                    } else {
+                        status = "Disable publisher successfully!";
+
+                        // Remove the disabled category from the table
+                        int columnIndex = 0; // id
+                        Object valueToSearch = Integer.valueOf(id);
+
+                        for (int i = 0; i < model.getRowCount(); i++) {
+                            // Get the value at the specified column of the current row
+                            Object cellValue = model.getValueAt(i, columnIndex);
+
+                            // Check if the value of the cell is equal to the value you are looking for
+                            if (valueToSearch.equals(cellValue)) {
+                                // If the value is found, remove the row from the model
+                                model.removeRow(i);
+                                break;
+                            }
+                        }
+
+                        // Notification
+                        JOptionPane.showMessageDialog(null, status);
+                    }
+                }
+            }
+        });
+
+        // Action listener for update publisher's info button
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -249,7 +300,7 @@ public class PublisherListFrame extends JFrame{
                     // Display a message telling the user to select an account
                     JOptionPane.showMessageDialog(null, "Please select a publisher to update", "Error", JOptionPane.ERROR_MESSAGE);
 
-                } else{
+                } else {
                     // Get the Id
                     int publisher_id = (int) table.getValueAt(table.getSelectedRow(), 0);
                     System.out.println("id:" + publisher_id);
@@ -285,6 +336,7 @@ public class PublisherListFrame extends JFrame{
                             setEnabled(true);
                             setVisible(true);
                         }
+
                         public void windowClosing(WindowEvent e) {
                             System.out.println("windowClosing");
                             // Enable the old frame

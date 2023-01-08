@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import pojo.PublisherPOJO;
 
 public class PublisherDA {
-
     public PublisherPOJO getPublisher(int id) {
         PublisherPOJO ans = null;
         Connection connection = null;
@@ -40,28 +39,36 @@ public class PublisherDA {
         return ans;
     }
 
-    public List<PublisherPOJO> getAll() {
+    public List<PublisherPOJO> getAllPublisher() {
         List<PublisherPOJO> ans = null;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet rs = null;
         try {
             ans = new ArrayList<>();
-            Connection connection = MyConnection.create();
-            Statement statement;
+            connection = MyConnection.create();
             statement = connection.createStatement();
-            String query = "SELECT * FROM publisher";
-            ResultSet rs = statement.executeQuery(query);
+            String query = "SELECT * FROM publisher WHERE status = 1";
+            rs = statement.executeQuery(query);
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String country = rs.getString("country");
                 boolean status = rs.getBoolean("status");
-                PublisherPOJO st = new PublisherPOJO(id, name, country, status);
-                ans.add(st);
+                PublisherPOJO publisher = new PublisherPOJO(id, name, country, status);
+                ans.add(publisher);
             }
-            rs.close();
-            statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
             ans = null;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return ans;
     }
@@ -76,7 +83,7 @@ public class PublisherDA {
             ans = new ArrayList<>();
             connection = MyConnection.create();
             statement = connection.createStatement();
-            String query = "SELECT * FROM publisher WHERE name like ?";
+            String query = "SELECT * FROM publisher WHERE status = 1 AND name like ?";
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, String.format("%%%s%%", publisherName));
             rs = pstmt.executeQuery();
@@ -195,6 +202,53 @@ public class PublisherDA {
         } catch (SQLException ex) {
             Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
             // Error: SQLException
+            status = -1;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
+    }
+
+    public int disablePublisher(int publisher_id) {
+        // Disable category successfully!
+        int status = 1;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM publisher WHERE id = ? AND status = 1;";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, publisher_id);
+            rs = pstmt.executeQuery();
+            if (!rs.next()) {
+                // Category not found or already be disabled
+                status = -2;
+            } else {
+                query = "UPDATE publisher SET status = 0 WHERE id = ?;";
+                pstmt = connection.prepareStatement(query);
+                pstmt.setInt(1, publisher_id);
+
+                // Execute the statement
+                int rowsUpdated = pstmt.executeUpdate();
+                if (rowsUpdated <= 0) {
+                    // Disable category fail!
+                    status = -3;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            // Error: SQL Exception
             status = -1;
         } finally {
             try {
