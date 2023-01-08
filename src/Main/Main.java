@@ -11,9 +11,13 @@ public class Main {
 //                UserListFrame userListFrame = new UserListFrame();
 //                userListFrame.setVisible(true);
                 
-                // Book category: List of book category
-                CategoryListFrame categoryListFrame = new CategoryListFrame();
-                categoryListFrame.setVisible(true);
+//                // Book category: List of book category
+//                CategoryListFrame categoryListFrame = new CategoryListFrame();
+//                categoryListFrame.setVisible(true);
+
+                // Promotion: List of promotion
+                PromotionListFrame promotionListFrame = new PromotionListFrame();
+                promotionListFrame.setVisible(true);
             }
         });
     }

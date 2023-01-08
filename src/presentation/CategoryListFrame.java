@@ -20,10 +20,8 @@ public class CategoryListFrame extends JFrame{
     private JPanel searchPanel;
     
     private JButton disable_Button;
-    private JPanel disable_Panel;
-    
     private JButton disabled_List_Button;
-    private JPanel disabled_List_Panel;
+    private JPanel disable_Panel;
     
     private JButton addNewCategoryButton;
     private JPanel addNewCategoryPanel;
