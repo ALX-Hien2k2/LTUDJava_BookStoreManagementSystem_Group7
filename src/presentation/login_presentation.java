@@ -4,12 +4,9 @@
  */
 package presentation;
 
-<<<<<<< Updated upstream
-import pojo.user;
-=======
+
 import Main.Main;
 import pojo.UserPOJO;
->>>>>>> Stashed changes
 import business.user_business;
 
 /**

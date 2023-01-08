@@ -21,7 +21,10 @@ public class user_business {
 
     public UserPOJO sign_in(String email, String password) {
         UserDA da = new UserDA();
-        return da.get_acc(email, password);
+        UserPOJO user = da.get_acc(email, password);
+        if(user!=null && user.getActive())
+            return user;
+        return null;
     }
 
     public void update_name(String name, int id) {

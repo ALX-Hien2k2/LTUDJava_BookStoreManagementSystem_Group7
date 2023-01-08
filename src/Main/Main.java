@@ -11,6 +11,7 @@ public class Main {
     public static login_presentation login = new login_presentation();
     public static Admin_Page ad_page = null;
     public static Employee_Page em_page = null;
+    public static BooksFrame books = null;
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

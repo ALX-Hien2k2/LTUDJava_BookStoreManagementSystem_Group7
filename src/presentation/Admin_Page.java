@@ -39,6 +39,7 @@ public class Admin_Page extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Admin");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -61,6 +62,11 @@ public class Admin_Page extends javax.swing.JFrame {
         Profile.setBorderPainted(false);
         Profile.setDefaultCapable(false);
         Profile.setFocusable(false);
+        Profile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProfileActionPerformed(evt);
+            }
+        });
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -135,25 +141,31 @@ public class Admin_Page extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addContainerGap(278, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 730, 370));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 730, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        
         Main.ad_page.setVisible(false);
-        Main.em_page.setVisible(false);
-        Main.profile.setVisible(false);
+        if(Main.profile!=null)
+            Main.profile.setVisible(false);
         Main.us = null;
         Main.ad_page=null;
-        Main.em_page=null;
         Main.profile=null;
         Main.login.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void ProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProfileActionPerformed
+        // TODO add your handling code here:
+        Main.profile = new pro_presentation();
+        Main.profile.setVisible(true);
+    }//GEN-LAST:event_ProfileActionPerformed
 
     /**
      * @param args the command line arguments

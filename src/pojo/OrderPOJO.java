@@ -5,6 +5,7 @@
 package pojo;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -14,6 +15,28 @@ public class OrderPOJO {
     int orderId;
     int memberId;
     int employeeId;
+    List<book> books;
+
+    public OrderPOJO() {
+    }
+
+    public OrderPOJO(int orderId, int memberId, int employeeId, LocalDate day, double total) {
+        this.orderId = orderId;
+        this.memberId = memberId;
+        this.employeeId = employeeId;
+        this.day = day;
+        this.total = total;
+    }
+
+    public OrderPOJO(int orderId, int memberId, int employeeId, List<book> books, LocalDate day, double total) {
+        this.orderId = orderId;
+        this.memberId = memberId;
+        this.employeeId = employeeId;
+        this.books = books;
+        this.day = day;
+        this.total = total;
+    }
+    
     LocalDate day;
     double total;
 
@@ -55,6 +78,14 @@ public class OrderPOJO {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public List<book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<book> books) {
+        this.books = books;
     }
     
 }

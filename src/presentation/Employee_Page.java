@@ -51,6 +51,11 @@ public class Employee_Page extends javax.swing.JFrame {
 
         jButton1.setText("Logout");
         jButton1.setBorder(null);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -62,6 +67,11 @@ public class Employee_Page extends javax.swing.JFrame {
 
         profile.setText("Profile");
         profile.setBorder(null);
+        profile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profileActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -186,6 +196,8 @@ public class Employee_Page extends javax.swing.JFrame {
 
     private void bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookActionPerformed
         // TODO add your handling code here:
+        Main.books = new BooksFrame();
+        Main.books.setVisible(true);
     }//GEN-LAST:event_bookActionPerformed
 
     private void author1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_author1ActionPerformed
@@ -207,6 +219,23 @@ public class Employee_Page extends javax.swing.JFrame {
     private void promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_promoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_promoActionPerformed
+
+    private void profileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileActionPerformed
+        // TODO add your handling code here:
+        Main.profile = new pro_presentation();
+        Main.profile.setVisible(true);
+    }//GEN-LAST:event_profileActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+                Main.em_page.setVisible(false);
+        if(Main.profile!=null)
+            Main.profile.setVisible(false);
+        Main.us = null;
+        Main.em_page=null;
+        Main.profile=null;
+        Main.login.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
