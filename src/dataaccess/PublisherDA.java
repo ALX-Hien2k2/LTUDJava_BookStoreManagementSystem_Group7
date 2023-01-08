@@ -112,14 +112,14 @@ public class PublisherDA {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         String query;
-         try {
+        try {
             connection = MyConnection.create();
             statement = connection.createStatement();
             query = "SELECT * FROM publisher WHERE name = ?;";
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, newPublisher.getName());
             rs = pstmt.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 // The category's name already exists
                 insertedId = -2;
             } else {
@@ -127,7 +127,6 @@ public class PublisherDA {
                 pstmt = connection.prepareStatement(query);
                 pstmt.setString(1, newPublisher.getName());
                 pstmt.setString(2, newPublisher.getCountry());
-
 
                 // Execute the statement
                 int rowsInserted = pstmt.executeUpdate();
@@ -160,5 +159,53 @@ public class PublisherDA {
             }
         }
         return insertedId;
+    }
+
+    public int updatePublisher(PublisherPOJO publisher) {
+        int status = 1;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            query = "SELECT * FROM publisher WHERE id = ?;";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, publisher.getId());
+            rs = pstmt.executeQuery();
+            if (!rs.next()) {
+                // Category not found
+                status = -2;
+            } else {
+                query = "UPDATE publisher SET name = ? WHERE id = ?;";
+                pstmt = connection.prepareStatement(query);
+                pstmt.setString(1, publisher.getName());
+                pstmt.setInt(2, publisher.getId());
+
+                // Execute the statement
+                int rowsUpdated = pstmt.executeUpdate();
+                System.out.println(rowsUpdated + " rows affected");
+                if (rowsUpdated == 0) {
+                    // Update account's info failed! OR The category's new info is the same as the old one
+                    status = -3;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            // Error: SQLException
+            status = -1;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pstmt.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PublisherDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return status;
     }
 }

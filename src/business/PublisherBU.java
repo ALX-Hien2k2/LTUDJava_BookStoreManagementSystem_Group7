@@ -5,6 +5,7 @@ import dataaccess.PublisherDA;
 import pojo.PublisherPOJO;
 
 public class PublisherBU {
+
     public PublisherPOJO getPublisher(int id) {
         PublisherDA da = new PublisherDA();
         return da.getPublisher(id);
@@ -14,13 +15,19 @@ public class PublisherBU {
         PublisherDA da = new PublisherDA();
         return da.getAll();
     }
-    
-     public List<PublisherPOJO> searchPublisher(String publisherName){
+
+    public List<PublisherPOJO> searchPublisher(String publisherName) {
         PublisherDA da = new PublisherDA();
         return da.searchPublisher(publisherName);
     }
-    public int insertPublisher(PublisherPOJO newPublisher){
+
+    public int insertPublisher(PublisherPOJO newPublisher) {
         PublisherDA da = new PublisherDA();
         return da.insertPublisher(newPublisher);
+    }
+
+    public int updatePublisher(PublisherPOJO publisherI) {
+        PublisherDA da = new PublisherDA();
+        return da.updatePublisher(publisherI);
     }
 }

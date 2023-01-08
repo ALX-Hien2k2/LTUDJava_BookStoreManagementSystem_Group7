@@ -239,5 +239,64 @@ public class PublisherListFrame extends JFrame{
                 addPublisherFrame.setVisible(true);
             }
         });
+        
+                // Action listener for update publisher's info button
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if a row is selected
+                if (table.getSelectedRow() == -1) {
+                    // Display a message telling the user to select an account
+                    JOptionPane.showMessageDialog(null, "Please select a publisher to update", "Error", JOptionPane.ERROR_MESSAGE);
+
+                } else{
+                    // Get the Id
+                    int publisher_id = (int) table.getValueAt(table.getSelectedRow(), 0);
+                    System.out.println("id:" + publisher_id);
+
+                    // Disable the old frame
+                    setEnabled(false);
+
+                    UpdatePublisherFrame updatePublisherFrame = new UpdatePublisherFrame(new UpdatePublisherFrame.PublisherUpdated() {
+                        public void publisherUpdated(String name, String country) {
+                            // Update the info in the table
+                            int row = table.getSelectedRow();
+                            int modelRow = table.convertRowIndexToModel(row);
+
+                            // name
+                            int name_column = 1;
+                            int name_modelColumn = table.convertColumnIndexToModel(name_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(name, modelRow, name_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, name_modelColumn);
+
+                            // country
+                            int country_column = 2;
+                            int country_modelColumn = table.convertColumnIndexToModel(country_column);
+                            ((DefaultTableModel) table.getModel()).setValueAt(country, modelRow, country_modelColumn);
+                            ((DefaultTableModel) table.getModel()).fireTableCellUpdated(modelRow, country_modelColumn);
+                        }
+                    }, publisher_id);
+
+                    // Add a listener to the addPublisherFrame's window closing event
+                    updatePublisherFrame.addWindowListener(new WindowAdapter() {
+                        public void windowClosed(WindowEvent e) {
+                            System.out.println("windowClosed");
+                            // Enable the old frame
+                            setEnabled(true);
+                            setVisible(true);
+                        }
+                        public void windowClosing(WindowEvent e) {
+                            System.out.println("windowClosing");
+                            // Enable the old frame
+                            setEnabled(true);
+                            setVisible(true);
+                        }
+                    });
+
+                    // Make the addPublisherFrame visible
+                    updatePublisherFrame.setVisible(true);
+                }
+            }
+        });
     }
 }
