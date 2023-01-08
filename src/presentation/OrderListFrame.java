@@ -145,5 +145,25 @@ public class OrderListFrame extends JFrame {
 
         // Set the visibility of the frame
         setVisible(true);
+
+        // Add action listener for the detail button
+        detail_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Get the selected row
+                int selectedRow = table.getSelectedRow();
+
+                // If no row is selected, show a message dialog
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(null, "Please select a order to view detail", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Get the id of the selected row
+                    int id = (int) table.getValueAt(selectedRow, 0);
+
+                    // Create a new OrderDetailFrame
+                    OrderDetailFrame detailFrame = new OrderDetailFrame(id);
+                }
+            }
+        });
     }
 }
