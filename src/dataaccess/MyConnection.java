@@ -11,11 +11,10 @@ public class MyConnection {
         try {
             Driver myDriver = new com.mysql.cj.jdbc.Driver();
             DriverManager.registerDriver(myDriver);
-
             String DB_URL = "jdbc:mysql://localhost/bookstore";
             String USER = "root";
-            String PASS = "123456";
-
+            String PASS = "T!nInvisible123";
+            
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
             return connection;
         } catch (SQLException ex) {

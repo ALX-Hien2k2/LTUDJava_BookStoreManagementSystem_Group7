@@ -1,28 +1,22 @@
 package pojo;
 
-import java.time.LocalDate;
-import java.util.*;
 import constant.Constant_var;
+import java.time.LocalDate;
 
 public class UserPOJO {
-    private int id;
-    private String username;
-    private String password;
-    private String fullname;
-    private LocalDate dob;
-    private String role;
-    private Boolean isActive;
+
+    int id;
+    String username;
+    String password;
+    String fullname;
+    LocalDate dob;
+    String role;
+    Boolean isActive;
     private Constant_var constant_var;
 
-    public UserPOJO(int id, String username, String password, String fullname, LocalDate dob, String role, Boolean isActive) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.fullname = fullname;
-        this.dob = dob;
-        this.role = role;
-        this.isActive = isActive;
+    public UserPOJO() {
     }
+
     public UserPOJO(String fullname, String username, String password, String role) {
         constant_var = new Constant_var();
         this.fullname = fullname;
@@ -39,6 +33,24 @@ public class UserPOJO {
         this.username = username;
         this.dob = dob;
         this.role = role;
+    }
+
+    public UserPOJO(int id, String username, String password, String fullname, LocalDate dob, String role, Boolean isActive) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        this.dob = dob;
+        this.role = role;
+        this.isActive = isActive;
+    }
+
+    public UserPOJO(String fullname, String username, String password) {
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.role = "Employee";
+        this.isActive = true;
     }
 
     public int getId() {
@@ -97,8 +109,6 @@ public class UserPOJO {
         isActive = active;
     }
 
-<<<<<<< Updated upstream
-=======
     public boolean changePassword(String newPassword) {
         if (this.password.equals(newPassword)) {
             return false;
@@ -113,7 +123,7 @@ public class UserPOJO {
     }
 
     public boolean sign_in(String username, String password) {
-        return this.username.equals(username) && this.password.equals(password) && this.isActive;
+        return this.username.equals(username) && this.password.equals(password);
     }
 
     public void update_info(String name, LocalDate dob) {
@@ -121,9 +131,8 @@ public class UserPOJO {
         this.dob = dob;
     }
 
->>>>>>> Stashed changes
     @Override
-    public String toString(){
+    public String toString() {
         return id + " ** " + username + " ** " + password + " ** " + fullname + " ** " + dob + " ** " + role + " ** " + isActive;
     }
 }

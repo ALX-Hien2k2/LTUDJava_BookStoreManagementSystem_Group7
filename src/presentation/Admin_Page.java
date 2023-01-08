@@ -61,7 +61,6 @@ public class Admin_Page extends javax.swing.JFrame {
         Profile.setBorderPainted(false);
         Profile.setDefaultCapable(false);
         Profile.setFocusable(false);
-        Profile.setOpaque(false);
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
