@@ -166,5 +166,47 @@ public class ImportSheetListFrame extends JFrame {
                 }
             }
         });
+
+        // Add action listener for the add new ImportSheet button
+        // Action listener for Add new ImportSheet button
+        // addNewImportSheetButton.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         // Disable the old frame
+        //         setEnabled(false);
+
+        //         AddImportSheetFrame addImportSheetFrame = new AddImportSheetFrame(new AddImportSheetFrame.ImportSheetInserted() {
+        //             public void importSheetInserted(int id, LocalDate date, String staff, double totalCost) {
+        //                 // Add a row to the table model
+        //                 model.addRow(new Object[]{
+        //                     id,
+        //                     date,
+        //                     staff,
+        //                     totalCost
+        //                     });
+        //             }
+        //         });
+
+        //         // Add a listener to the addUserFrame's window closing event
+        //         addImportSheetFrame.addWindowListener(new WindowAdapter() {
+        //             public void windowClosed(WindowEvent e) {
+        //                 System.out.println("windowClosed");
+        //                 // Enable the old frame
+        //                 setEnabled(true);
+        //                 setVisible(true);
+        //             }
+
+        //             public void windowClosing(WindowEvent e) {
+        //                 System.out.println("windowClosing");
+        //                 // Enable the old frame
+        //                 setEnabled(true);
+        //                 setVisible(true);
+        //             }
+        //         });
+
+        //         // Make the addUserFrame visible
+        //         addImportSheetFrame.setVisible(true);
+        //     }
+        // });
     }
 }
