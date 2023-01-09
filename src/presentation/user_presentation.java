@@ -4,7 +4,7 @@
  */
 package presentation;
 
-import pojo.user;
+import pojo.UserPOJO;
 import java.util.*;
 import dataaccess.*;
 
@@ -14,7 +14,7 @@ import dataaccess.*;
  */
 public class user_presentation {
 
-    static user us = null;
+    static UserPOJO us = null;
     static login_presentation login = new login_presentation();
     static pro_presentation profile = null;
 

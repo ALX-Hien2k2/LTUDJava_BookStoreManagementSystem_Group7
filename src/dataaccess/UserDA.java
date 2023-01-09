@@ -1,18 +1,28 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package dataaccess;
 
-import pojo.UserPOJO;
 import constant.Constant_var;
-
+import pojo.UserPOJO;
 import java.sql.*;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author TIN
+ */
 public class UserDA {
+
     private Constant_var constant_var;
-    public List<UserPOJO> getAllAccount(){
+
+    public List<UserPOJO> getAllAccount() {
         List<UserPOJO> ans = null;
         Connection connection = null;
         Statement statement = null;
@@ -23,7 +33,7 @@ public class UserDA {
             statement = connection.createStatement();
             String query = "SELECT * FROM users";
             rs = statement.executeQuery(query);
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
@@ -49,7 +59,135 @@ public class UserDA {
         return ans;
     }
 
-    public List<UserPOJO> searchAccount(String name){
+    public UserPOJO get_acc(String mail, String pass) {
+        UserPOJO ans = null;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pr_statement = null;
+        ResultSet rs = null;
+        try {
+
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            String query = "SELECT * FROM users where username =  ? and password = ?";
+            pr_statement = connection.prepareStatement(query);
+            pr_statement.setString(1, mail);
+            pr_statement.setString(2, pass);
+            rs = pr_statement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String fullname = rs.getString("fullname");
+                LocalDate dob = rs.getDate("dob").toLocalDate();
+                String role = rs.getString("role");
+                Boolean isActive = rs.getBoolean("isActive");
+                UserPOJO user = new UserPOJO(id, username, password, fullname, dob, role, isActive);
+                ans = user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+            ans = null;
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                rs.close();
+                pr_statement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return ans;
+    }
+
+    public void update_name(String fullname, int id) {
+
+        Connection connection = null;
+        Statement statement = null;
+
+        PreparedStatement pr_statement = null;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            String query = "UPDATE users SET fullname = ? WHERE id = ?";
+            pr_statement = connection.prepareStatement(query);
+            pr_statement.setString(1, fullname);
+            pr_statement.setInt(2, id);
+            pr_statement.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pr_statement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    public void update_dob(String dob, int id) {
+
+        Connection connection = null;
+        Statement statement = null;
+
+        PreparedStatement pr_statement = null;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            String query = "UPDATE users set dob = ? where id = ?";
+            pr_statement = connection.prepareStatement(query);
+            pr_statement.setString(1, dob);
+            pr_statement.setString(2, Integer.toString(id));
+            pr_statement.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pr_statement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void change_pass(String pass, int id) {
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement pr_statement = null;
+        try {
+            connection = MyConnection.create();
+            statement = connection.createStatement();
+            String query = "UPDATE users set password = ? where id = ?";
+            pr_statement = connection.prepareStatement(query);
+            pr_statement.setString(1, pass);
+            pr_statement.setString(2, Integer.toString(id));
+            pr_statement.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+                pr_statement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public List<UserPOJO> searchAccount(String name) {
         List<UserPOJO> ans = null;
         Connection connection = null;
         Statement statement = null;
@@ -63,7 +201,7 @@ public class UserDA {
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, String.format("%%%s%%", name));
             rs = pstmt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
@@ -90,7 +228,8 @@ public class UserDA {
         return ans;
     }
 
-    public int insertAccount(UserPOJO newAccount){
+
+    public int insertAccount(UserPOJO newAccount) {
         // if insertedId = 0: get LAST_INSERT_ID() fail
         int insertedId = 0;
         Connection connection = null;
@@ -105,7 +244,7 @@ public class UserDA {
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, newAccount.getUsername());
             rs = pstmt.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 // The username already exists
                 insertedId = -2;
             } else {
@@ -150,7 +289,7 @@ public class UserDA {
         return insertedId;
     }
 
-    public String enableAccount(int account_id){
+    public String enableAccount(int account_id) {
         String status = "";
         Connection connection = null;
         Statement statement = null;
@@ -164,12 +303,12 @@ public class UserDA {
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, account_id);
             rs = pstmt.executeQuery();
-            if(!rs.next()){
+            if (!rs.next()) {
                 // Account not found
                 status = "Account not exists!";
             } else {
                 Boolean isActive = rs.getBoolean("isActive");
-                if(isActive){
+                if (isActive) {
                     // Account already enable
                     status = "Account already enable!";
                 } else {
@@ -202,7 +341,7 @@ public class UserDA {
         return status;
     }
 
-    public String disableAccount(int account_id){
+    public String disableAccount(int account_id) {
         String status = "";
         Connection connection = null;
         Statement statement = null;
@@ -216,12 +355,12 @@ public class UserDA {
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, account_id);
             rs = pstmt.executeQuery();
-            if(!rs.next()){
+            if (!rs.next()) {
                 // Account not found
                 status = "Account not exists!";
             } else {
                 Boolean isActive = rs.getBoolean("isActive");
-                if(!isActive){
+                if (!isActive) {
                     // Account already enable
                     status = "Account already disable!";
                 } else {
@@ -254,7 +393,7 @@ public class UserDA {
         return status;
     }
 
-    public String resetPassword(int account_id){
+    public String resetPassword(int account_id) {
         constant_var = new Constant_var();
         String status = "";
         Connection connection = null;
@@ -269,7 +408,7 @@ public class UserDA {
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, account_id);
             rs = pstmt.executeQuery();
-            if(!rs.next()){
+            if (!rs.next()) {
                 // Account not found
                 status = "Account not exists!";
             } else {
@@ -316,7 +455,7 @@ public class UserDA {
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, updateAccount.getId());
             rs = pstmt.executeQuery();
-            if(!rs.next()){
+            if (!rs.next()) {
                 // Account not found
                 status = -2;
             } else {
@@ -331,7 +470,7 @@ public class UserDA {
                 // Execute the statement
                 int rowsUpdated = pstmt.executeUpdate();
                 System.out.println(rowsUpdated + " rows affected");
-                if (rowsUpdated == 0){
+                if (rowsUpdated == 0) {
                     // Update account's info failed! OR The account's new info is the same as the old one
                     status = -3;
                 }

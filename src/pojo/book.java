@@ -4,6 +4,8 @@
  */
 package pojo;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author TIN
@@ -22,9 +24,28 @@ public class book {
     String publisher;
     String category;
 
+    boolean isActive;
+    int promo_id;
+    LocalDate day;
     public book() {
         
     }
+
+    public book(int id, String name, double price, int quantity, int author_id, int publisher_id, int category_id, String author, String publisher, String category, boolean isActive, int promo_id, LocalDate day) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.author_id = author_id;
+        this.publisher_id = publisher_id;
+        this.category_id = category_id;
+        this.author = author;
+        this.publisher = publisher;
+        this.category = category;
+        this.isActive = isActive;
+        this.promo_id = promo_id;
+        this.day = day;
+    }    
     
     public book(int id, String name, double price, int quantity, int author_id, int publisher_id, int category_id) {
         this.id = id;
@@ -61,6 +82,24 @@ public class book {
 
     public String getCategory() {
         return category;
+    }
+
+    public LocalDate getDay() {
+        return day;
+    }
+
+    public void setDay(LocalDate day) {
+        this.day = day;
+    }
+
+ 
+
+    public int getPromo_id() {
+        return promo_id;
+    }
+
+    public void setPromo_id(int promo_id) {
+        this.promo_id = promo_id;
     }
 
     public int getId() {
@@ -118,7 +157,29 @@ public class book {
     public void setCategory_id(int category_id) {
         this.category_id = category_id;
     }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    
     public String toString(){
-        return id + "   " + name + "    " + price + "   " + quantity + "    " + author_id + "   " + publisher_id + "    " + category_id;
+        return id + "   " + name + "    " + price + "   " + quantity + "    " + author + "   " + publisher + "    " + category;
     }
 }
