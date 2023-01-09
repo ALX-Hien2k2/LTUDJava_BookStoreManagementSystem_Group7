@@ -10,12 +10,72 @@ package business;
  */
 import pojo.book;
 import java.util.*;
-import dataaccess.*;
+import dataaccess.book_da;
 
 public class book_business {
-    public List<book> getAll(){
+
+    public List<book> getAll() {
         book_da da = new book_da();
         return da.getAll();
     }
-}
+    public List<book> getBookByPromotion(int promo_id){
+        book_da da = new book_da();
+        return da.getBookByPromotion(promo_id);
+    }
+    public List<book> searchBookByPromotion(String name, int promo_id){
+        book_da da = new book_da();
+        return da.searchBookByPromotion(name, promo_id);
+    }
+    public List<book> getNewBooks() {
+            book_da da = new book_da();
+            return da.getNewBooks();
+        }
+    public List<book> getOutOfStock() {
+        book_da da = new book_da();
+        return da.getOutOfStock();
+    }
+    public void Disable_book(int id) {
+        book_da da = new book_da();
+        da.Disable_book(id);
+    }
 
+    public void Enable_book(int id) {
+        book_da da = new book_da();
+        da.Enable_book(id);
+    }
+
+    public boolean check_name_exists(String name) {
+        book_da da = new book_da();
+        return da.check_book_exists(name);
+    }
+
+    public boolean check_promo_exists(int name) {
+        book_da da = new book_da();
+        return da.check_promoCode_exists(name);
+    }
+
+    public int check_id_by_name(String name, String table) {
+        book_da da = new book_da();
+        return da.get_id_by_name(name, table);
+    }
+
+    public boolean add_book(String name, double price, int quant, int author, int publisher, int category) {
+        book_da da = new book_da();
+        return da.add_book(name, price, quant, author, publisher, category);
+    }
+
+    public void update_string(String name, int id) {
+        book_da da = new book_da();
+        da.update_string(name, id);
+    }
+
+    public void update_double(double name, int id) {
+        book_da da = new book_da();
+        da.update_double(name, id);
+    }
+
+    public void update_int(int name, int id, String target) {
+        book_da da = new book_da();
+        da.update_int(name, id, target);
+    }
+}
