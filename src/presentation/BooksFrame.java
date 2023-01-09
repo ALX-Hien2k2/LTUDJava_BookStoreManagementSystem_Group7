@@ -470,7 +470,9 @@ public class BooksFrame extends javax.swing.JFrame {
 
         table.setAutoCreateRowSorter(true);
         table.setModel(tableModel);
+        table.setFocusable(false);
         table.setGridColor(new java.awt.Color(0, 0, 0));
+        table.setSelectionBackground(new java.awt.Color(204, 255, 255));
         jScrollPane1.setViewportView(table);
         table.getModel().addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
@@ -553,7 +555,7 @@ public class BooksFrame extends javax.swing.JFrame {
 
         });
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 633, 280));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 633, 280));
         jPanel1.add(notice, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 170, -1));
 
         jButton4.setText("View New Book");

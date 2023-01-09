@@ -16,36 +16,43 @@ import java.util.logging.Logger;
  * @author TIN
  */
 public class book_da {
-    public List<book> getAll(){
-       List<book> ans = null;
-       try {
-           ans = new ArrayList<>();
-           Connection connection = MyConnection.create();
-           Statement statement;
-           statement = connection.createStatement();
-           String query = "SELECT * FROM book";
-           ResultSet rs = statement.executeQuery(query);
-           while(rs.next()){
-               int id = rs.getInt("id");
-               String name = rs.getString("name");
-               double price = rs.getDouble("price");
-               int quantity = rs.getInt("quantity");
-               int author_id= rs.getInt("author_id");
-               int publisher_id = rs.getInt("publisher_id");
-               int category_id = rs.getInt("category_id");
-               book st = new book(id, name,price,quantity, author_id,publisher_id,category_id);
-               ans.add(st);
-           }
-           rs.close();
-           statement.close();
-       } catch (SQLException ex) {
-           Logger.getLogger(book_da.class.getName()).log(Level.SEVERE, null, ex);
-           ans = null;
-       }
-       return ans;
+
+    public List<book> getAll() {
+        List<book> ans = null;
+        try {
+            ans = new ArrayList<>();
+            Connection connection = MyConnection.create();
+            Statement statement;
+            statement = connection.createStatement();
+            String query = "SELECT * FROM book, author, categories, publisher where book.author_id=author.id and book.category_id=categories.id and book.publisher_id = publisher.id order by book.id asc;";
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double price = rs.getDouble("price");
+                int quantity = rs.getInt("quantity");
+                int author_id = rs.getInt("author_id");
+                int publisher_id = rs.getInt("publisher_id");
+                int category_id = rs.getInt("category_id");
+                String category = rs.getString("categories.name");
+                String publisher = rs.getString("publisher.name");
+                String author = rs.getString("author.name");
+                boolean isActive = rs.getBoolean("book.isActive");
+                int promo_id = rs.getInt("promo_id");
+                LocalDate day = rs.getDate("date").toLocalDate();
+                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id, day);
+                ans.add(st);
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(book_da.class.getName()).log(Level.SEVERE, null, ex);
+            ans = null;
+        }
+        return ans;
     }
-    
-    public List<book> getBookByPromotion(int promo_id){
+
+    public List<book> getBookByPromotion(int promo_id) {
         List<book> ans = null;
         Connection connection = null;
         Statement statement = null;
@@ -55,12 +62,12 @@ public class book_da {
             ans = new ArrayList<>();
             connection = MyConnection.create();
             statement = connection.createStatement();
-            String query = 
-                "SELECT b.id, b.name, b.price, b.quantity, a.name AS author, p.name AS publisher, c.name AS category, b.promotion_id " +
-                "FROM book b, author a, publisher p, categories c " +
-                "WHERE b.author_id = a.id AND b.publisher_id = p.id AND b.category_id = c.id AND b.isActive = 1 AND b.promotion_id = ?;";
+            String query
+                    = "SELECT b.id, b.name, b.price, b.quantity, a.name AS author, p.name AS publisher, c.name AS category, b.promotion_id "
+                    + "FROM book b, author a, publisher p, categories c "
+                    + "WHERE b.author_id = a.id AND b.publisher_id = p.id AND b.category_id = c.id AND b.isActive = 1 AND b.promotion_id = ?;";
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1,promo_id);
+            pstmt.setInt(1, promo_id);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -71,7 +78,7 @@ public class book_da {
                 String publisher = rs.getString("publisher");
                 String category = rs.getString("category");
                 int promotion_id = rs.getInt("promotion_id");
-                
+
                 book row_book = new book(id, name, price, quantity, author, publisher, category, promotion_id);
                 ans.add(row_book);
             }
@@ -90,8 +97,8 @@ public class book_da {
         }
         return ans;
     }
-    
-    public List<book> searchBookByPromotion(String promoName, int promo_id){
+
+    public List<book> searchBookByPromotion(String promoName, int promo_id) {
         List<book> ans = null;
         Connection connection = null;
         Statement statement = null;
@@ -101,15 +108,15 @@ public class book_da {
             ans = new ArrayList<>();
             connection = MyConnection.create();
             statement = connection.createStatement();
-            String query = 
-                "SELECT b.id, b.name, b.price, b.quantity, a.name AS author, p.name AS publisher, c.name AS category, b.promotion_id " +
-                "FROM book b, author a, publisher p, categories c " +
-                "WHERE b.author_id = a.id AND b.publisher_id = p.id AND b.category_id = c.id AND b.isActive = 1 AND b.promotion_id = ? AND b.name like ?;";
+            String query
+                    = "SELECT b.id, b.name, b.price, b.quantity, a.name AS author, p.name AS publisher, c.name AS category, b.promotion_id "
+                    + "FROM book b, author a, publisher p, categories c "
+                    + "WHERE b.author_id = a.id AND b.publisher_id = p.id AND b.category_id = c.id AND b.isActive = 1 AND b.promotion_id = ? AND b.name like ?;";
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1,promo_id);
+            pstmt.setInt(1, promo_id);
             pstmt.setString(2, String.format("%%%s%%", promoName));
             rs = pstmt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 double price = rs.getDouble("price");
@@ -161,7 +168,7 @@ public class book_da {
                 boolean isActive = rs.getBoolean("book.isActive");
                 int promo_id = rs.getInt("promo_id");
                 LocalDate day = rs.getDate("date").toLocalDate();
-                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id,day);
+                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id, day);
                 ans.add(st);
             }
             rs.close();
@@ -172,7 +179,8 @@ public class book_da {
         }
         return ans;
     }
-public List<book> getNewBooks() {
+
+    public List<book> getNewBooks() {
         List<book> ans = null;
         try {
             ans = new ArrayList<>();
@@ -195,7 +203,7 @@ public List<book> getNewBooks() {
                 boolean isActive = rs.getBoolean("book.isActive");
                 int promo_id = rs.getInt("promo_id");
                 LocalDate day = rs.getDate("date").toLocalDate();
-                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id,day);
+                book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id, day);
                 ans.add(st);
             }
             rs.close();
@@ -206,6 +214,7 @@ public List<book> getNewBooks() {
         }
         return ans;
     }
+
     public boolean check_book_exists(String name) {
         Connection connection = null;
         Statement statement = null;
@@ -237,6 +246,7 @@ public List<book> getNewBooks() {
         }
         return false;
     }
+
     public boolean check_promoCode_exists(int id) {
         Connection connection = null;
         Statement statement = null;
@@ -268,6 +278,7 @@ public List<book> getNewBooks() {
         }
         return false;
     }
+
     public int get_id_by_name(String name, String table) {
         Connection connection = null;
         Statement statement = null;

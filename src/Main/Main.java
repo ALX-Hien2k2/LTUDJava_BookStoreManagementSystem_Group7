@@ -16,6 +16,7 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Admin
+                //login.setVisible(true);
                 UserListFrame userListFrame = new UserListFrame();
                 userListFrame.setVisible(true);
                 
