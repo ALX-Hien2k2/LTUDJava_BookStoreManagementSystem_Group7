@@ -574,6 +574,8 @@ public class BooksFrame extends javax.swing.JFrame {
     private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
         // TODO add your handling code here:
         ShowBook();
+        Notice_book.setText("");
+        Notice_add_book.setText("");
     }//GEN-LAST:event_refreshActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
