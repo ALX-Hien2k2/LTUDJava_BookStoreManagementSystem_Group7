@@ -55,7 +55,7 @@ public class AddAuthorFrame extends JFrame implements ActionListener {
         setSize(500, 200);
         setVisible(true);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       
     }
 
     public String getName() {

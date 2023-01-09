@@ -38,7 +38,7 @@ public class book_da {
                 String publisher = rs.getString("publisher.name");
                 String author = rs.getString("author.name");
                 boolean isActive = rs.getBoolean("book.isActive");
-                int promo_id = rs.getInt("promo_id");
+                int promo_id = rs.getInt("promotion_id");
                 LocalDate day = rs.getDate("date").toLocalDate();
                 book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id, day);
                 ans.add(st);
@@ -166,7 +166,7 @@ public class book_da {
                 String publisher = rs.getString("publisher.name");
                 String author = rs.getString("author.name");
                 boolean isActive = rs.getBoolean("book.isActive");
-                int promo_id = rs.getInt("promo_id");
+                int promo_id = rs.getInt("promotion_id");
                 LocalDate day = rs.getDate("date").toLocalDate();
                 book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id, day);
                 ans.add(st);
@@ -201,7 +201,7 @@ public class book_da {
                 String publisher = rs.getString("publisher.name");
                 String author = rs.getString("author.name");
                 boolean isActive = rs.getBoolean("book.isActive");
-                int promo_id = rs.getInt("promo_id");
+                int promo_id = rs.getInt("promotion_id");
                 LocalDate day = rs.getDate("date").toLocalDate();
                 book st = new book(id, name, price, quantity, author_id, publisher_id, category_id, author, publisher, category, isActive, promo_id, day);
                 ans.add(st);

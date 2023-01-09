@@ -14,7 +14,7 @@ import Main.Main;
 // In some frame that show user information, it will need to run the login frame first
 
 public class Admin_Page extends javax.swing.JFrame {
-
+    UserListFrame user = null;
     /**
      * Creates new form Admin_Page
      */
@@ -117,6 +117,11 @@ public class Admin_Page extends javax.swing.JFrame {
 
         jButton1.setText("Manage Account");
         jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Revenue");
         jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -169,6 +174,12 @@ public class Admin_Page extends javax.swing.JFrame {
         Main.profile = new pro_presentation();
         Main.profile.setVisible(true);
     }//GEN-LAST:event_ProfileActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        user = new UserListFrame();
+        user.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

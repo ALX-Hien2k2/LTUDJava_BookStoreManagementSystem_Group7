@@ -153,19 +153,15 @@
                       <Component id="book" max="32767" attributes="0"/>
                       <Component id="promo" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                          <Component id="author1" min="-2" pref="121" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="import_book" min="-2" pref="282" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                          <Component id="author1" alignment="1" min="-2" pref="141" max="-2" attributes="0"/>
                           <Component id="publisher" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="import_book" max="32767" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace pref="17" max="32767" attributes="0"/>
+                  <EmptySpace pref="21" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -176,15 +172,17 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="book" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                       <Component id="author1" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="publisher" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="category" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="import_book" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="publisher" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="promo" min="-2" pref="60" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="promo" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="import_book" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace pref="106" max="32767" attributes="0"/>
               </Group>
           </Group>

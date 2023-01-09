@@ -62,7 +62,7 @@ public class UpdateAuthorFrame extends JFrame implements ActionListener {
         setSize(500, 300);
         setVisible(true);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+   
     }
 
     public int getId() {

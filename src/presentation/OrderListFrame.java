@@ -141,7 +141,7 @@ public class OrderListFrame extends JFrame {
         setLocationRelativeTo(null);
 
         // Exit the application when the frame is closed
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  
 
         // Set the visibility of the frame
         setVisible(true);

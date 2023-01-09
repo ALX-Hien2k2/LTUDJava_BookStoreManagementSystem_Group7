@@ -12,6 +12,13 @@ import Main.Main;
  */
 public class Employee_Page extends javax.swing.JFrame {
 
+    public static BooksFrame books = null;
+    public static ManageAuthor author = null;
+    public static PublisherListFrame pub = null;
+    public static CategoryListFrame cate = null;
+    public static ImportSheetListFrame imp = null;
+    public static PromotionListFrame promocode = null;
+
     /**
      * Creates new form Employee_Page
      */
@@ -161,16 +168,13 @@ public class Employee_Page extends javax.swing.JFrame {
                     .addComponent(category, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(book, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(promo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(author1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(publisher, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(import_book, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(import_book, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(author1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(publisher, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,14 +182,15 @@ public class Employee_Page extends javax.swing.JFrame {
                 .addGap(78, 78, 78)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(book, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(author1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(publisher, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(author1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(category, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(import_book, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(publisher, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(promo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(promo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(import_book, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(106, Short.MAX_VALUE))
         );
 
@@ -196,28 +201,37 @@ public class Employee_Page extends javax.swing.JFrame {
 
     private void bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookActionPerformed
         // TODO add your handling code here:
-        Main.books = new BooksFrame();
-        Main.books.setVisible(true);
+        books = new BooksFrame();
+        books.setVisible(true);
     }//GEN-LAST:event_bookActionPerformed
 
     private void author1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_author1ActionPerformed
         // TODO add your handling code here:
+        author = new ManageAuthor();
+        author.setVisible(true);
     }//GEN-LAST:event_author1ActionPerformed
 
     private void publisherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publisherActionPerformed
         // TODO add your handling code here:
+        pub = new PublisherListFrame();
+        pub.setVisible(true);
     }//GEN-LAST:event_publisherActionPerformed
 
     private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
         // TODO add your handling code here:
+        cate = new CategoryListFrame();
+        cate.setVisible(true);
     }//GEN-LAST:event_categoryActionPerformed
 
     private void import_bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_bookActionPerformed
         // TODO add your handling code here:
+        imp = new ImportSheetListFrame();
     }//GEN-LAST:event_import_bookActionPerformed
 
     private void promoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_promoActionPerformed
         // TODO add your handling code here:
+        promocode = new PromotionListFrame();
+        promocode.setVisible(true);
     }//GEN-LAST:event_promoActionPerformed
 
     private void profileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileActionPerformed
@@ -228,12 +242,13 @@ public class Employee_Page extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-                Main.em_page.setVisible(false);
-        if(Main.profile!=null)
+        Main.em_page.setVisible(false);
+        if (Main.profile != null) {
             Main.profile.setVisible(false);
+        }
         Main.us = null;
-        Main.em_page=null;
-        Main.profile=null;
+        Main.em_page = null;
+        Main.profile = null;
         Main.login.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

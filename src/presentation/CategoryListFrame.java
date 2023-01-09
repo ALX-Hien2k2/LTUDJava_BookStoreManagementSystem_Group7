@@ -161,7 +161,7 @@ public class CategoryListFrame extends JFrame{
         setLocationRelativeTo(null);
 
         // Exit the application when the frame is closed
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
         
         // Action listener for Search button (Search by name)
         searchButton.addActionListener(new ActionListener() {

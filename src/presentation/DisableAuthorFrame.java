@@ -41,7 +41,7 @@ public class DisableAuthorFrame extends JFrame implements ActionListener {
         setSize(500, 200);
         setVisible(true);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
     }
 
     @Override

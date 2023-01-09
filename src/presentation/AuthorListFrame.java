@@ -39,7 +39,7 @@ public class AuthorListFrame extends JFrame implements ActionListener {
         frame.setSize(500, 200);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ 
     }
 
     @Override
