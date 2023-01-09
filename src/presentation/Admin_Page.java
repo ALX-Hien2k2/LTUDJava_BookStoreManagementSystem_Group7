@@ -10,6 +10,9 @@ import Main.Main;
  *
  * @author TIN
  */
+
+// In some frame that show user information, it will need to run the login frame first
+
 public class Admin_Page extends javax.swing.JFrame {
 
     /**
